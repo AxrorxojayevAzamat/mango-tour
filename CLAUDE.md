@@ -49,7 +49,7 @@ hand-drawn vector mark `src/assets/brand/mango-mark.svg`: `public/brand/logo*.we
 ## Folder structure
 
 ```
-docs/                  brand source, IMAGES.md, DEPLOY.md
+docs/                  brand source, IMAGES.md (photos), AUDIT.md (stage-6 results), DEPLOY.md (Cloudflare, domain, checklist)
 functions/             Cloudflare Pages Functions: api/lead.ts (route) + lib/ (logic, *.test.ts)
 public/                static files copied as-is (_redirects, _headers, icons, brand/, images/)
 scripts/               node build helpers (brand, postbuild, images, seo)
@@ -110,7 +110,8 @@ Every stage must end with a clean `npm run build` and `npm test`, then a meaning
 
 ## Workflow agreed with the client
 
-Work in stages, stop after each and wait for "davom et":
+All 7 stages are done (see git log). Further changes: keep the same discipline — build + tests,
+meaningful commit, verify on https://mango-tour.pages.dev. Original staged plan:
 1) skeleton · 2) content model + uz/en/ru content · 3) header, hero, footer · 4) remaining blocks
 · 5) lead form + Pages Function + Telegram · 6) SEO/sitemap/JSON-LD/a11y/perf audit
 · 7) deploy docs. If a requirement is ambiguous, ask — don't guess.

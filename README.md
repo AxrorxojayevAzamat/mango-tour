@@ -58,55 +58,15 @@ Telegram'ga keladigan xabar namunasi:
 🕒 Vaqt: 16.11.2026, 18:49 (Toshkent)
 ```
 
-## Formani ishga tushirish: 4 qadam
+## Deploy va formani ishga tushirish
 
-### 1. Telegram bot va chat ID
+Cloudflare Pages sozlamalari, Telegram bot, Turnstile, KV, env o‘zgaruvchilari, o‘z domeningizni
+ulash, ishga tushirishdan oldingi checklist va muammolarni hal qilish —
+**[`docs/DEPLOY.md`](docs/DEPLOY.md)** da.
 
-1. Telegram'da **@BotFather** ga yozing → `/newbot` → bot nomi va username'ini kiriting.
-   BotFather **token** beradi (`1234567890:AAH…`). Uni hech kimga bermang.
-2. Arizalar keladigan joyni tanlang:
-   - **Guruh** (tavsiya etiladi — butun jamoa ko‘radi): guruh yarating, botni a’zo qilib qo‘shing
-     va guruhga `/start@sizning_botingiz` deb yozing.
-   - **Kanal**: botni kanalga **administrator** qilib qo‘shing.
-   - **Shaxsiy chat**: botga `/start` yozing.
-3. Chat ID ni bilish: brauzerda `https://api.telegram.org/bot<TOKEN>/getUpdates` ni oching
-   (`<TOKEN>` o‘rniga tokeningiz) va javobdan `"chat":{"id": …}` qiymatini toping.
-   Guruh/kanal ID si odatda `-100` bilan boshlanadi.
-
-### 2. Cloudflare Turnstile (spamdan himoya)
-
-1. Cloudflare dashboard → **Turnstile** → **Add widget**.
-2. Widget name: `mango-tour`. Hostname: `mango-tour.pages.dev` (keyin o‘z domeningizni ham qo‘shasiz).
-3. Widget mode: **Managed** → **Create**.
-4. Ikkita kalit beriladi: **Site Key** (ochiq) va **Secret Key** (maxfiy).
-
-### 3. KV namespace (rate-limit uchun)
-
-1. Cloudflare dashboard → **Storage & Databases → KV** → **Create** → nom: `mango-tour-rate-limit`.
-2. **Workers & Pages → mango-tour → Settings → Bindings → Add → KV namespace**:
-   Variable name: `LEAD_RATE_LIMIT`, namespace: `mango-tour-rate-limit` → **Save**.
-
-KV ulanmagan bo‘lsa ham forma ishlaydi, faqat rate-limit o‘chiq bo‘ladi (Cloudflare loglarida
-ogohlantirish chiqadi).
-
-### 4. Cloudflare Pages o‘zgaruvchilari
-
-**Workers & Pages → mango-tour → Settings → Variables and Secrets → Add**:
-
-| Nomi | Turi | Qiymati | Kim ishlatadi |
-|---|---|---|---|
-| `TURNSTILE_SITE_KEY` | Text | Turnstile **Site Key** | build (brauzerga tushadi — bu normal) |
-| `TELEGRAM_BOT_TOKEN` | **Secret** | BotFather bergan token | faqat Pages Function |
-| `TELEGRAM_CHAT_ID` | Text | chat ID (`-100…`) | faqat Pages Function |
-| `TURNSTILE_SECRET_KEY` | **Secret** | Turnstile **Secret Key** | faqat Pages Function |
-| `NODE_VERSION` | Text | `22.23.4` | build (allaqachon qo‘shilgan) |
-
-Saqlagandan so‘ng **Deployments → oxirgi deploy → ⋯ → Retry deployment** qiling: site key
-build paytida saytga yoziladi, shuning uchun qayta build kerak.
-
-> Kalitlar kiritilmaguncha sayt Cloudflare'ning **test** Turnstile kalitidan foydalanadi, server
-> esa arizalarni `not_configured` xatosi bilan rad etadi — forma «Arizani yuborib bo‘lmadi» deb
-> ko‘rsatadi. Bu kutilgan holat.
+Qisqacha: Cloudflare'da `TURNSTILE_SITE_KEY`, `TELEGRAM_BOT_TOKEN` (Secret), `TELEGRAM_CHAT_ID`,
+`TURNSTILE_SECRET_KEY` (Secret) va `LEAD_RATE_LIMIT` KV binding'ini qo‘shib, **Retry deployment**
+qiling. Kalitlar kiritilmaguncha forma «Arizani yuborib bo‘lmadi» deb javob beradi — bu kutilgan holat.
 
 ## Formani lokal sinash
 
@@ -126,4 +86,4 @@ npm run dev:functions     # http://localhost:8788/uz
 - [`CLAUDE.md`](CLAUDE.md) — arxitektura qarorlari, papka tuzilmasi, kod uslubi (ingliz tilida)
 - [`docs/IMAGES.md`](docs/IMAGES.md) — mijoz beradigan rasmlar ro‘yxati va almashtirish tartibi
 - [`docs/AUDIT.md`](docs/AUDIT.md) — SEO, accessibility va Lighthouse natijalari
-- `docs/DEPLOY.md` — Cloudflare Pages, env o‘zgaruvchilar, custom domen *(7-bosqich)*
+- [`docs/DEPLOY.md`](docs/DEPLOY.md) — Cloudflare Pages, env o‘zgaruvchilar, custom domen, checklist
