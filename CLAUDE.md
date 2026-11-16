@@ -23,7 +23,9 @@ agency (Uzbekistan cities + Central Asia). Goal: collect free-consultation leads
 | Motion | `appReveal` (`shared/reveal/`) fades elements in on first scroll into view via the Web Animations API — no global CSS; never hides what is already on screen; disabled under `prefers-reduced-motion`. |
 | Overlays | Lightbox = native `<dialog>` + `showModal()` (focus trap, Escape, inert page). FAQ = native `<details name="faq">` (exclusive). Prefer native elements over hand-rolled ARIA widgets. |
 | Anchor links | In-page links are plain `href="/{lang}#{anchor}"` (never bare `#x`: `<base href="/">` would resolve it to `/#x`). The router scrolls to anchors; `Header` gives `ViewportScroller` the fixed-header offset. |
-| Forms → leads | Cloudflare Pages Function `functions/api/lead.ts` → Telegram bot. `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `TURNSTILE_SECRET_KEY` are **server-only env vars**; never import or reference them from `src/`. Spam: honeypot + Cloudflare Turnstile. Rate-limit: Cloudflare KV. |
+| Forms → leads | `app-lead-form` (typed Reactive Forms) POSTs JSON to the Pages Function `functions/api/lead.ts` → Telegram bot. Validation rules live ONCE in `src/app/core/lead/lead-rules.ts` (framework-free) and are imported by both the form and the function. Pipeline: origin check → size → JSON → honeypot (`website`, silent fake success) → validation (422 + field codes) → KV rate-limit (5 / 10 min / hashed IP, binding `LEAD_RATE_LIMIT`, soft-fails open) → Turnstile siteverify → Telegram `sendMessage` (HTML, every value escaped, time in Asia/Tashkent). `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `TURNSTILE_SECRET_KEY` are **server-only**; never import `functions/` or these names from `src/`. |
+| Public build env | `scripts/env.mjs` (runs before build/start/test, reads `.env` locally) writes git-ignored `src/app/core/config/public-env.generated.ts` with ONLY public values: `TURNSTILE_SITE_KEY` (defaults to Cloudflare's always-pass test key) and `SITE_URL`. |
+| Cloudflare config | No `wrangler.toml`: env vars, secrets and the KV binding are set in the Pages dashboard (a `wrangler.toml` would make those read-only there). Local: `npm run dev:functions` (wrangler reads `.env`, in-memory KV). |
 | Deploy | Cloudflare Pages: build `npm run build`, output `dist/mango-tour/browser`, functions in `functions/`. |
 | Site URL | Not decided yet — read from `SITE_URL` env at build time; placeholder `https://mangotour.example`. |
 | Client data | Phone, address, email, Instagram, stats, etc. are **visible placeholders** like `+998 (XX) XXX-XX-XX`. Never invent real-looking data. |
@@ -46,7 +48,7 @@ hand-drawn vector mark `src/assets/brand/mango-mark.svg`: `public/brand/logo*.we
 
 ```
 docs/                  brand source, IMAGES.md, DEPLOY.md
-functions/api/         Cloudflare Pages Functions (lead.ts + lib/)
+functions/             Cloudflare Pages Functions: api/lead.ts (route) + lib/ (logic, *.test.ts)
 public/                static files copied as-is (_redirects, _headers, icons, brand/, images/)
 scripts/               node build helpers (brand, postbuild, images, seo)
 src/
@@ -56,7 +58,8 @@ src/
   assets/brand/        vector sources
   app/
     core/              i18n (languages, guard, LanguageService, fill), content (resolver),
-                       images (loader), seo, …
+                       images (loader), lead (lead-rules shared with functions, prefill),
+                       turnstile (lazy loader), config (generated public env), seo, …
     pages/home/        HomePage — composes all sections for one language
     sections/          header, lang-switcher, hero, footer, … (one BEM block each)
     shared/            reusable UI: icon (hand-drawn set in icons.ts), button, section-heading,
@@ -94,7 +97,8 @@ src/
 npm ci                 # install
 npm start              # dev server http://localhost:4200 (→ /uz)
 npm run build          # production build + prerender + postbuild → dist/mango-tour/browser
-npm test               # unit tests (Vitest via ng test), single run
+npm test               # Angular unit tests (ng test) + Pages Function tests (functions/vitest.config.mts)
+npm run dev:functions  # serve dist/ with /api/lead locally via wrangler (after npm run build)
 npm run test:watch     # tests in watch mode
 npm run brand          # regenerate logo/favicon/OG assets
 npm run images         # build responsive WebP ladders from src/assets/images

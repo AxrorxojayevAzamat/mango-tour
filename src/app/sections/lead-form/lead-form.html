@@ -1,0 +1,210 @@
+@let c = content();
+<section class="lead-form" [id]="anchor" [attr.aria-labelledby]="anchor + '-title'">
+  <div class="lead-form__inner">
+    <div class="lead-form__intro">
+      <app-section-heading [heading]="c" [titleId]="anchor + '-title'" />
+      <p class="lead-form__privacy">{{ c.privacyNote }}</p>
+    </div>
+
+    <div class="lead-form__panel">
+      @if (status() === 'success') {
+        <div class="lead-form__result" role="status" tabindex="-1" #success>
+          <app-icon class="lead-form__result-icon" name="check" />
+          <h3 class="lead-form__result-title">{{ c.success.title }}</h3>
+          <p class="lead-form__result-text">{{ c.success.text }}</p>
+          <button app-button variant="ghost" type="button" (click)="again()">
+            {{ c.success.again }}
+          </button>
+        </div>
+      }
+
+      <form
+        class="lead-form__form"
+        [hidden]="status() === 'success'"
+        [formGroup]="form"
+        (ngSubmit)="submit()"
+        novalidate
+      >
+        <!-- Name -->
+        @let nameError = errorFor('name');
+        <div class="lead-form__field">
+          <label class="lead-form__label" for="lead-name">
+            {{ c.fields.name.label }} <span class="lead-form__required" aria-hidden="true">*</span>
+          </label>
+          <input
+            class="lead-form__input"
+            [class.lead-form__input--invalid]="nameError"
+            id="lead-name"
+            type="text"
+            formControlName="name"
+            autocomplete="name"
+            required
+            [attr.maxlength]="limits.nameMax"
+            [placeholder]="c.fields.name.placeholder"
+            [attr.aria-invalid]="!!nameError"
+            [attr.aria-describedby]="nameError ? 'lead-name-error' : null"
+          />
+          @if (nameError) {
+            <p class="lead-form__error" id="lead-name-error">{{ nameError }}</p>
+          }
+        </div>
+
+        <!-- Phone -->
+        @let phoneError = errorFor('phone');
+        <div class="lead-form__field">
+          <label class="lead-form__label" for="lead-phone">
+            {{ c.fields.phone.label }} <span class="lead-form__required" aria-hidden="true">*</span>
+          </label>
+          <input
+            class="lead-form__input"
+            [class.lead-form__input--invalid]="phoneError"
+            id="lead-phone"
+            type="tel"
+            inputmode="tel"
+            formControlName="phone"
+            appPhoneMask
+            autocomplete="tel"
+            required
+            [attr.maxlength]="limits.phoneInputMax"
+            [placeholder]="c.fields.phone.placeholder"
+            [attr.aria-invalid]="!!phoneError"
+            [attr.aria-describedby]="phoneError ? 'lead-phone-error' : null"
+          />
+          @if (phoneError) {
+            <p class="lead-form__error" id="lead-phone-error">{{ phoneError }}</p>
+          }
+        </div>
+
+        <!-- Email -->
+        @let emailError = errorFor('email');
+        <div class="lead-form__field">
+          <label class="lead-form__label" for="lead-email">
+            {{ c.fields.email.label }}
+            <span class="lead-form__optional">({{ c.optional }})</span>
+          </label>
+          <input
+            class="lead-form__input"
+            [class.lead-form__input--invalid]="emailError"
+            id="lead-email"
+            type="email"
+            inputmode="email"
+            formControlName="email"
+            autocomplete="email"
+            [attr.maxlength]="limits.emailMax"
+            [placeholder]="c.fields.email.placeholder"
+            [attr.aria-invalid]="!!emailError"
+            [attr.aria-describedby]="emailError ? 'lead-email-error' : null"
+          />
+          @if (emailError) {
+            <p class="lead-form__error" id="lead-email-error">{{ emailError }}</p>
+          }
+        </div>
+
+        <!-- Destination -->
+        <div class="lead-form__field">
+          <label class="lead-form__label" for="lead-destination">
+            {{ c.fields.destination.label }}
+            <span class="lead-form__optional">({{ c.optional }})</span>
+          </label>
+          <div class="lead-form__select-wrap">
+            <select
+              class="lead-form__input lead-form__input--select"
+              id="lead-destination"
+              formControlName="destination"
+            >
+              <option value="">{{ c.fields.destination.placeholder }}</option>
+              <optgroup [label]="c.destinationGroups.cities">
+                @for (option of cityOptions(); track option.id) {
+                  <option [value]="option.id">{{ option.name }}</option>
+                }
+              </optgroup>
+              <optgroup [label]="c.destinationGroups.countries">
+                @for (option of countryOptions(); track option.id) {
+                  <option [value]="option.id">{{ option.name }}</option>
+                }
+              </optgroup>
+              <option value="other">{{ c.destinationOther }}</option>
+            </select>
+            <app-icon class="lead-form__select-icon" name="chevron-down" />
+          </div>
+        </div>
+
+        <!-- Comment -->
+        @let commentError = errorFor('comment');
+        <div class="lead-form__field lead-form__field--wide">
+          <label class="lead-form__label" for="lead-comment">
+            {{ c.fields.comment.label }}
+            <span class="lead-form__optional">({{ c.optional }})</span>
+          </label>
+          <textarea
+            class="lead-form__input lead-form__input--textarea"
+            [class.lead-form__input--invalid]="commentError"
+            id="lead-comment"
+            rows="4"
+            formControlName="comment"
+            [attr.maxlength]="limits.commentMax"
+            [placeholder]="c.fields.comment.placeholder"
+            [attr.aria-invalid]="!!commentError"
+            [attr.aria-describedby]="commentError ? 'lead-comment-error' : null"
+          ></textarea>
+          @if (commentError) {
+            <p class="lead-form__error" id="lead-comment-error">{{ commentError }}</p>
+          }
+        </div>
+
+        <!-- Honeypot: invisible to people and screen readers; bots fill it in. -->
+        <div class="lead-form__trap" aria-hidden="true">
+          <label for="lead-website">Website</label>
+          <input
+            id="lead-website"
+            type="text"
+            formControlName="website"
+            tabindex="-1"
+            autocomplete="off"
+          />
+        </div>
+
+        <!-- Cloudflare Turnstile -->
+        <div class="lead-form__field lead-form__field--wide">
+          <div class="lead-form__captcha" #captcha></div>
+          @if (showCaptchaError()) {
+            <p class="lead-form__error" role="alert">{{ c.errors.captcha }}</p>
+          }
+        </div>
+
+        @if (status() === 'error') {
+          <div class="lead-form__alert" role="alert">
+            <app-icon class="lead-form__alert-icon" name="alert" />
+            <div class="lead-form__alert-body">
+              <p class="lead-form__alert-title">{{ c.failure.title }}</p>
+              <p class="lead-form__alert-text">
+                {{ failure() === 'captcha' ? c.errors.captcha : c.failure.text }}
+              </p>
+            </div>
+          </div>
+        }
+
+        <div class="lead-form__field lead-form__field--wide">
+          <button
+            app-button
+            size="lg"
+            [block]="true"
+            type="submit"
+            [disabled]="status() === 'submitting'"
+            [attr.aria-busy]="status() === 'submitting'"
+          >
+            @if (status() === 'submitting') {
+              <span class="lead-form__spinner" aria-hidden="true"></span>
+              {{ c.submitting }}
+            } @else if (status() === 'error') {
+              {{ c.failure.retry }}
+            } @else {
+              {{ c.submit }}
+              <app-icon name="arrow-right" />
+            }
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

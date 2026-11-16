@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
 import type { SiteContent } from '../../../content/content.model';
-import { SECTION_IDS } from '../../../content/ids';
 import { Lang } from '../../core/i18n/languages';
 import { Destinations } from '../../sections/destinations/destinations';
 import { Faq } from '../../sections/faq/faq';
@@ -9,10 +8,10 @@ import { Footer } from '../../sections/footer/footer';
 import { Gallery } from '../../sections/gallery/gallery';
 import { Header } from '../../sections/header/header';
 import { Hero } from '../../sections/hero/hero';
+import { LeadForm } from '../../sections/lead-form/lead-form';
 import { Reasons } from '../../sections/reasons/reasons';
 import { Services } from '../../sections/services/services';
 import { WhyUs } from '../../sections/why-us/why-us';
-import { SectionHeading } from '../../shared/section-heading/section-heading';
 
 /** The whole landing page for one language, top to bottom. */
 @Component({
@@ -27,8 +26,8 @@ import { SectionHeading } from '../../shared/section-heading/section-heading';
     Gallery,
     Faq,
     Footer,
+    LeadForm,
     FloatingContacts,
-    SectionHeading,
   ],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
@@ -42,6 +41,4 @@ export class HomePage {
 
   /** While the mobile menu is open, everything behind it is `inert`. */
   protected readonly menuOpen = signal(false);
-
-  protected readonly formAnchor = SECTION_IDS.leadForm;
 }

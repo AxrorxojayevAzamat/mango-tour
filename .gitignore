@@ -53,3 +53,6 @@ Thumbs.db
 # Generated responsive images (npm run images)
 /public/images/
 /.cache/
+
+# Generated public build config (npm run env)
+/src/app/core/config/public-env.generated.ts

@@ -24,10 +24,3 @@
 .home-page__main {
   outline: none;
 }
-
-// TEMPORARY placeholder for the stage-5 lead form (keeps the #contact anchor working).
-.home-page__pending {
-  max-width: var(--container-max);
-  margin-inline: auto;
-  padding: var(--space-section) var(--container-gutter);
-}

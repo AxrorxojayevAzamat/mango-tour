@@ -12,14 +12,12 @@
   <app-destinations kind="countries" [lang]="lang()" [content]="c.countries" />
   <app-gallery [content]="c.gallery" />
 
-  <!-- TEMPORARY: the lead form arrives in stage 5; the anchor already works. -->
-  <section
-    class="home-page__pending"
-    [id]="formAnchor"
-    [attr.aria-labelledby]="formAnchor + '-title'"
-  >
-    <app-section-heading [heading]="c.leadForm" [titleId]="formAnchor + '-title'" />
-  </section>
+  <app-lead-form
+    [lang]="lang()"
+    [content]="c.leadForm"
+    [cities]="c.cities"
+    [countries]="c.countries"
+  />
 
   <app-faq [content]="c.faq" />
 </main>
