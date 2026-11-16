@@ -153,3 +153,45 @@
   color: var(--color-text-subtle);
   font-size: var(--font-size-xs);
 }
+
+.footer__credits {
+  margin-block-start: var(--space-3);
+  color: var(--color-text-subtle);
+  font-size: var(--font-size-xs);
+}
+
+.footer__credits-toggle {
+  display: inline-block;
+  border-radius: var(--radius-sm);
+  text-decoration: underline;
+  text-decoration-color: var(--color-border-strong);
+  text-underline-offset: 0.25em;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-text);
+  }
+}
+
+.footer__credits-list {
+  display: grid;
+  gap: var(--space-1);
+  margin-block-start: var(--space-3);
+
+  @include bp.up(lg) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-8);
+  }
+}
+
+.footer__credit {
+  overflow-wrap: anywhere;
+}
+
+.footer__credit-link {
+  color: var(--color-text-muted);
+
+  &:hover {
+    color: var(--color-accent);
+  }
+}

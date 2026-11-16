@@ -86,5 +86,36 @@
 
   <div class="footer__bottom">
     <p class="footer__copyright">{{ copyright() }}</p>
+    @if (credits.length) {
+      <details class="footer__credits">
+        <summary class="footer__credits-toggle">{{ c.photoCredits }}</summary>
+        <ul class="footer__credits-list" role="list">
+          @for (credit of credits; track credit.source) {
+            <li class="footer__credit">
+              <a
+                class="footer__credit-link"
+                [href]="credit.source"
+                target="_blank"
+                rel="noopener"
+                >{{ credit.title }}</a
+              >
+              — {{ credit.author }},
+              @if (credit.licenseUrl) {
+                <a
+                  class="footer__credit-link"
+                  [href]="credit.licenseUrl"
+                  target="_blank"
+                  rel="noopener license"
+                  >{{ credit.license }}</a
+                >
+              } @else {
+                {{ credit.license }}
+              }
+              · Wikimedia Commons
+            </li>
+          }
+        </ul>
+      </details>
+    }
   </div>
 </footer>

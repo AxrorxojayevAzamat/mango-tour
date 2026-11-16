@@ -173,6 +173,8 @@ export interface FooterContent {
   /** Client placeholder lines: legal name, tax id, licence number… */
   readonly companyDetails: readonly string[];
   readonly offerLink: string;
+  /** Disclosure listing photo authors and licences (Wikimedia Commons attribution). */
+  readonly photoCredits: string;
   /** Must contain `{year}`. */
   readonly copyright: string;
 }

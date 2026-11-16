@@ -2,6 +2,7 @@ import { NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import type { FooterContent, NavContent } from '../../../content/content.model';
 import { NAV_IDS } from '../../../content/ids';
+import { IMAGE_CREDITS } from '../../../content/image-credits';
 import { SITE_CONFIG } from '../../../content/site-config';
 import { fill } from '../../core/i18n/fill';
 import { Lang } from '../../core/i18n/languages';
@@ -32,6 +33,17 @@ export class Footer {
   readonly year = input(new Date().getFullYear());
 
   protected readonly navIds = NAV_IDS;
+  /** Photo attributions in page order (hero, cities, countries, gallery). */
+  protected readonly credits = (() => {
+    const { hero, cities, countries, gallery } = SITE_CONFIG.images;
+    const bases = [
+      hero,
+      ...Object.values(cities),
+      ...Object.values(countries),
+      ...Object.values(gallery),
+    ];
+    return bases.flatMap((base) => (IMAGE_CREDITS[base] ? [IMAGE_CREDITS[base]] : []));
+  })();
   protected readonly config = SITE_CONFIG;
 
   protected readonly copyright = computed(() =>

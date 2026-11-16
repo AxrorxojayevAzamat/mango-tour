@@ -338,6 +338,7 @@ export const ru = {
     companyTitle: 'Реквизиты',
     companyDetails: ['ООО «MANGOTOUR TRAVEL»', 'ИНН: 313 479 851', 'Лицензия туроператора: № XXXX'],
     offerLink: 'Публичная оферта',
+    photoCredits: 'Авторы фото и лицензии',
     copyright: '© {year} mango_tour. Все права защищены.',
   },
 

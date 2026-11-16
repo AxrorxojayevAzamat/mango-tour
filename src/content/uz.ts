@@ -348,6 +348,7 @@ export const uz = {
       'Turoperator litsenziyasi: № XXXX',
     ],
     offerLink: 'Ommaviy oferta',
+    photoCredits: 'Foto mualliflari va litsenziyalar',
     copyright: '© {year} mango_tour. Barcha huquqlar himoyalangan.',
   },
 

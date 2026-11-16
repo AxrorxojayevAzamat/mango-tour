@@ -346,6 +346,7 @@ export const en = {
       'Tour operator licence: No. XXXX',
     ],
     offerLink: 'Public offer',
+    photoCredits: 'Photo credits and licences',
     copyright: '© {year} mango_tour. All rights reserved.',
   },
 

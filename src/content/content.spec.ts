@@ -12,6 +12,7 @@ import {
   STAT_IDS,
 } from './ids';
 import { ru } from './ru';
+import { IMAGE_CREDITS } from './image-credits';
 import { SITE_CONFIG } from './site-config';
 import { uz } from './uz';
 import { placeholdersOf } from '../app/core/i18n/fill';
@@ -146,6 +147,32 @@ describe('site content', () => {
     it('does not write o’/g’ (U+2019) where o‘/g‘ (U+2018) is meant', () => {
       for (const [path, value] of texts) {
         expect(value, path).not.toMatch(/[oOgG]’\p{L}/u);
+      }
+    });
+  });
+
+  describe('photo credits', () => {
+    const { hero, cities, countries, gallery } = SITE_CONFIG.images;
+    const bases = [
+      hero,
+      ...Object.values(cities),
+      ...Object.values(countries),
+      ...Object.values(gallery),
+    ];
+
+    it('only credits images that exist on the page', () => {
+      for (const base of Object.keys(IMAGE_CREDITS)) expect(bases, base).toContain(base);
+    });
+
+    it('uses only licences that allow commercial use and modification', () => {
+      for (const [base, credit] of Object.entries(IMAGE_CREDITS)) {
+        expect(credit.license, base).toMatch(/^(CC0|Public domain|CC BY(-SA)? [1-4]\.0)/i);
+        expect(credit.license, base).not.toMatch(/NC|ND/);
+        expect(credit.author.trim(), base).not.toBe('');
+        expect(credit.source, base).toMatch(/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/);
+        if (/^CC BY/i.test(credit.license)) {
+          expect(credit.licenseUrl, base).toMatch(/^https?:\/\/creativecommons\.org\//);
+        }
       }
     });
   });
