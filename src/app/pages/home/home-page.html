@@ -1,42 +1,29 @@
 @let c = content();
-<main class="home-page">
-  <img
-    class="home-page__logo"
-    ngSrc="brand/logo"
-    width="228"
-    height="44"
-    [alt]="config.brandName"
-    priority
-  />
+<a class="home-page__skip" [href]="'/' + lang() + '#main'">{{ c.a11y.skipToContent }}</a>
 
-  <nav class="home-page__langs" [attr.aria-label]="c.nav.languageSwitcher">
-    @for (code of langs; track code) {
-      <a
-        class="home-page__lang"
-        [class.home-page__lang--active]="code === lang()"
-        [routerLink]="['/', code]"
-        [attr.hreflang]="langMeta[code].htmlLang"
-        [attr.lang]="langMeta[code].htmlLang"
-        [attr.aria-current]="code === lang() ? 'page' : null"
-      >
-        {{ code.toUpperCase() }}
-      </a>
-    }
-  </nav>
+<app-header [lang]="lang()" [nav]="c.nav" [(menuOpen)]="menuOpen" />
 
-  <p class="home-page__eyebrow">{{ c.hero.eyebrow }}</p>
-  <h1 class="home-page__title">{{ c.hero.title }}</h1>
-  <p class="home-page__lead">{{ c.hero.lead }}</p>
+<main class="home-page__main" id="main" tabindex="-1" [inert]="menuOpen()">
+  <app-hero [lang]="lang()" [content]="c.hero" />
 
-  <ul class="home-page__menu" role="list">
-    @for (id of navIds; track id) {
-      <li class="home-page__menu-item">{{ c.nav.items[id] }}</li>
-    }
-  </ul>
-
-  <ol class="home-page__sections">
-    @for (title of sectionTitles(); track $index) {
-      <li class="home-page__section">{{ title }}</li>
-    }
-  </ol>
+  <!-- TEMPORARY: replaced by real section components in stage 4. -->
+  @for (section of pendingSections(); track section.id) {
+    <section
+      class="home-page__pending"
+      [id]="section.id"
+      [attr.aria-labelledby]="section.id + '-title'"
+    >
+      <p class="home-page__eyebrow">{{ section.heading.eyebrow }}</p>
+      <h2 class="home-page__title" [id]="section.id + '-title'">{{ section.heading.title }}</h2>
+      <p class="home-page__subtitle">{{ section.heading.subtitle }}</p>
+    </section>
+  }
 </main>
+
+<app-footer
+  [lang]="lang()"
+  [content]="c.footer"
+  [nav]="c.nav"
+  [messengerLabels]="c.floating"
+  [inert]="menuOpen()"
+/>

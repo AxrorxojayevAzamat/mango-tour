@@ -1,18 +1,15 @@
-import { NgOptimizedImage } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
 import type { SiteContent } from '../../../content/content.model';
-import { NAV_IDS } from '../../../content/ids';
-import { SITE_CONFIG } from '../../../content/site-config';
-import { LANGS, LANG_META, Lang } from '../../core/i18n/languages';
+import { SECTION_IDS } from '../../../content/ids';
+import { Lang } from '../../core/i18n/languages';
+import { Footer } from '../../sections/footer/footer';
+import { Header } from '../../sections/header/header';
+import { Hero } from '../../sections/hero/hero';
 
-/**
- * Landing page for one language. Until stage 3 it renders a content preview that proves
- * routing, prerender and the typed content files; sections replace it stage by stage.
- */
+/** The whole landing page for one language. */
 @Component({
   selector: 'app-home-page',
-  imports: [NgOptimizedImage, RouterLink],
+  imports: [Header, Hero, Footer],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,22 +20,21 @@ export class HomePage {
   /** Bound from `contentResolver`. */
   readonly content = input.required<SiteContent>();
 
-  protected readonly langs = LANGS;
-  protected readonly langMeta = LANG_META;
-  protected readonly navIds = NAV_IDS;
-  protected readonly config = SITE_CONFIG;
+  /** While the mobile menu is open, everything behind it is `inert`. */
+  protected readonly menuOpen = signal(false);
 
-  protected readonly sectionTitles = computed(() => {
+  /** TEMPORARY (stage 4 replaces these with real section components). */
+  protected readonly pendingSections = computed(() => {
     const c = this.content();
     return [
-      c.whyUs.title,
-      c.services.title,
-      c.reasons.title,
-      c.cities.title,
-      c.countries.title,
-      c.gallery.title,
-      c.leadForm.title,
-      c.faq.title,
+      { id: SECTION_IDS.whyUs, heading: c.whyUs },
+      { id: SECTION_IDS.services, heading: c.services },
+      { id: SECTION_IDS.reasons, heading: c.reasons },
+      { id: SECTION_IDS.cities, heading: c.cities },
+      { id: SECTION_IDS.countries, heading: c.countries },
+      { id: SECTION_IDS.gallery, heading: c.gallery },
+      { id: SECTION_IDS.leadForm, heading: c.leadForm },
+      { id: SECTION_IDS.faq, heading: c.faq },
     ];
   });
 }

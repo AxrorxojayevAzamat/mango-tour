@@ -1,0 +1,18 @@
+<ul class="lang-switcher" role="list" [attr.aria-label]="label()">
+  @for (code of langs; track code) {
+    <li class="lang-switcher__item">
+      <a
+        class="lang-switcher__link"
+        [class.lang-switcher__link--active]="code === current()"
+        [routerLink]="['/', code]"
+        [attr.hreflang]="meta[code].htmlLang"
+        [attr.lang]="meta[code].htmlLang"
+        [attr.aria-current]="code === current() ? 'page' : null"
+        [attr.title]="meta[code].label"
+      >
+        <span aria-hidden="true">{{ code.toUpperCase() }}</span>
+        <span class="visually-hidden">{{ meta[code].label }}</span>
+      </a>
+    </li>
+  }
+</ul>

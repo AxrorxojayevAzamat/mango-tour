@@ -49,3 +49,6 @@ Thumbs.db
 !.env.example
 .dev.vars
 .wrangler/
+
+# Generated responsive images (npm run images)
+/public/images/

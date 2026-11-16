@@ -1,14 +1,15 @@
 import { IMAGE_CONFIG, IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
 import { Provider } from '@angular/core';
+import { IMAGE_WIDTHS } from './image-widths';
+
+export { IMAGE_WIDTHS };
 
 /**
- * Every raster image is pre-generated at these widths as `{base}-{width}.webp`
- * (see scripts/). NgOptimizedImage asks for these widths in `fill`/`sizes` mode;
- * for fixed-size images it asks for width×density, which we snap up to the ladder.
+ * Every raster image is pre-generated at the IMAGE_WIDTHS ladder as `{base}-{width}.webp`
+ * (`npm run images`). NgOptimizedImage asks for ladder widths in `fill`/`sizes` mode; for
+ * fixed-size images it asks for width×density, which we snap up to the ladder.
+ * `ngSrc` is the extension-less base path, e.g. `images/cities/samarkand`.
  */
-export const IMAGE_WIDTHS = [240, 480, 720, 960, 1280, 1600, 1920] as const;
-
-/** `ngSrc` is the extension-less base path, e.g. `images/cities/samarkand`. */
 export function webpLoader({ src, width }: ImageLoaderConfig): string {
   const base = `/${src.replace(/^\/+/, '').replace(/\.webp$/, '')}`;
   if (!width) {

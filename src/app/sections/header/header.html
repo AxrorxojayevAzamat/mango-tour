@@ -1,0 +1,67 @@
+@let n = nav();
+<header
+  class="header"
+  id="top"
+  [class.header--scrolled]="scrolled() || menuOpen()"
+  [class.header--open]="menuOpen()"
+>
+  <div class="header__bar" #bar>
+    <a class="header__logo" [href]="href('top')" (click)="closeMenu()">
+      <img
+        class="header__logo-image"
+        ngSrc="brand/logo"
+        width="208"
+        height="40"
+        [alt]="config.brandName"
+        priority
+      />
+    </a>
+
+    <nav
+      class="header__nav"
+      id="site-menu"
+      [class.header__nav--open]="menuOpen()"
+      [attr.aria-label]="n.label"
+    >
+      <ul class="header__menu" role="list">
+        @for (id of navIds; track id) {
+          <li class="header__item">
+            <a class="header__link" [href]="href(id)" (click)="closeMenu()">{{ n.items[id] }}</a>
+          </li>
+        }
+      </ul>
+
+      <div class="header__contacts">
+        <a class="header__phone" [href]="config.contacts.phoneHref" (click)="closeMenu()">
+          <app-icon class="header__contact-icon" name="phone" />
+          <span class="visually-hidden">{{ n.phoneLabel }}:</span>
+          <span class="header__phone-number">{{ config.contacts.phoneDisplay }}</span>
+        </a>
+        <a
+          class="header__social"
+          [href]="config.social.instagramUrl"
+          target="_blank"
+          rel="noopener"
+          [attr.aria-label]="n.instagramLabel"
+          [attr.title]="n.instagramLabel"
+        >
+          <app-icon class="header__contact-icon" name="instagram" />
+        </a>
+      </div>
+    </nav>
+
+    <app-lang-switcher class="header__langs" [current]="lang()" [label]="n.languageSwitcher" />
+
+    <button
+      #burger
+      class="header__burger"
+      type="button"
+      aria-controls="site-menu"
+      [attr.aria-expanded]="menuOpen()"
+      [attr.aria-label]="menuOpen() ? n.closeMenu : n.openMenu"
+      (click)="toggleMenu()"
+    >
+      <app-icon [name]="menuOpen() ? 'close' : 'menu'" />
+    </button>
+  </div>
+</header>

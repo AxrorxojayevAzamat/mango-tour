@@ -17,7 +17,8 @@ agency (Uzbekistan cities + Central Asia). Goal: collect free-consultation leads
 | Styling | SCSS + BEM, no UI libraries (no Material/Bootstrap/Tailwind). |
 | Font | Manrope Variable, self-hosted via `@fontsource-variable/manrope` (latin, latin-ext, cyrillic). |
 | Uzbek apostrophes | Manrope has **no U+02BB/U+02BC**. In Uzbek text write oʻ/gʻ with **U+2018** (`O‘zbekiston`, `G‘ijduvon`) and the tutuq belgisi with **U+2019** (`san’at`, `qal’a`). Never a plain `'`. Enforced by `content.spec.ts`. |
-| Images | `NgOptimizedImage` + custom loader (`core/images/image-loader.ts`). `ngSrc` is the extension-less base path; files exist as `{base}-{width}.webp` for widths `240 480 720 960 1280 1600 1920`. Hero image gets `priority`. Placeholders only — the client supplies real photos (see `docs/IMAGES.md`). |
+| Images | `NgOptimizedImage` + custom loader (`core/images/image-loader.ts`). `ngSrc` is the extension-less base path (from `SITE_CONFIG.images`). Sources live in `src/assets/images/<group>/<name>.jpg` (neutral placeholders until the client sends photos — see `docs/IMAGES.md`); `npm run images` (auto-run before `build`/`start`) writes `public/images/<group>/<name>-{240…1920}.webp` (git-ignored, incremental). `npm run images -- --placeholders` creates missing placeholder sources. Hero image gets `priority`. |
+| Anchor links | In-page links are plain `href="/{lang}#{anchor}"` (never bare `#x`: `<base href="/">` would resolve it to `/#x`). The router scrolls to anchors; `Header` gives `ViewportScroller` the fixed-header offset. |
 | Forms → leads | Cloudflare Pages Function `functions/api/lead.ts` → Telegram bot. `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `TURNSTILE_SECRET_KEY` are **server-only env vars**; never import or reference them from `src/`. Spam: honeypot + Cloudflare Turnstile. Rate-limit: Cloudflare KV. |
 | Deploy | Cloudflare Pages: build `npm run build`, output `dist/mango-tour/browser`, functions in `functions/`. |
 | Site URL | Not decided yet — read from `SITE_URL` env at build time; placeholder `https://mangotour.example`. |
@@ -53,8 +54,8 @@ src/
     core/              i18n (languages, guard, LanguageService, fill), content (resolver),
                        images (loader), seo, …
     pages/home/        HomePage — composes all sections for one language
-    sections/          one component per landing block (header, hero, why-us, services, …)
-    shared/            reusable UI (icon, button, lightbox, reveal directive, …)
+    sections/          header, lang-switcher, hero, footer, … (one BEM block each)
+    shared/            reusable UI: icon (hand-drawn set in icons.ts), button, lightbox, …
 ```
 
 ## Code style
@@ -69,6 +70,8 @@ src/
 ### SCSS / BEM rules
 
 - **1 component = 1 BEM block** named after the selector without `app-` (`app-hero` → `.hero`).
+  The block class sits on the template's root element. Components whose **host element is the
+  block** (`app-icon`, `a[app-button]`) use `ViewEncapsulation.None` — BEM names keep them scoped.
 - Max **2 levels**: `.block__element` — never `.block__element__sub`. Needing a 3rd level means
   extracting a child component.
 - Modifiers: `.block--variant`, `.block__element--state`, always together with the base class.
@@ -89,6 +92,7 @@ npm run build          # production build + prerender + postbuild → dist/mango
 npm test               # unit tests (Vitest via ng test), single run
 npm run test:watch     # tests in watch mode
 npm run brand          # regenerate logo/favicon/OG assets
+npm run images         # build responsive WebP ladders from src/assets/images
 ```
 
 Every stage must end with a clean `npm run build` and `npm test`, then a meaningful commit.

@@ -1,0 +1,40 @@
+@let c = content();
+<section class="hero" aria-labelledby="hero-title">
+  <img class="hero__image" [ngSrc]="image" fill priority sizes="100vw" [alt]="c.imageAlt" />
+
+  <!-- Flight-path motif from the logo: an arc drawn once, ending in a small plane. -->
+  <svg
+    class="hero__route"
+    viewBox="0 0 1200 600"
+    preserveAspectRatio="xMaxYMid slice"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path class="hero__route-line" pathLength="1" d="M880 640C900 400 960 200 1080 120" />
+    <path
+      class="hero__route-plane"
+      transform="translate(1100 107) rotate(-34) scale(1.05)"
+      d="M22 0C22-1.8 20.5-2.6 18-2.6L10-2.6 1-17H-4L1.5-2.6H-11L-16-9H-19.5L-17-2.2V2.2L-19.5 9H-16L-11 2.6H1.5L-4 17H1L10 2.6H18C20.5 2.6 22 1.8 22 0Z"
+    />
+  </svg>
+
+  <div class="hero__inner">
+    <p class="hero__eyebrow">{{ c.eyebrow }}</p>
+    <h1 class="hero__title" id="hero-title">{{ c.title }}</h1>
+    <p class="hero__lead">{{ c.lead }}</p>
+
+    <a app-button size="lg" class="hero__cta" [href]="'/' + lang() + '#' + formAnchor">
+      {{ c.cta }}
+      <app-icon name="arrow-right" />
+    </a>
+
+    <dl class="hero__stats">
+      @for (id of statIds; track id) {
+        <div class="hero__stat">
+          <dt class="hero__stat-label">{{ c.stats[id] }}</dt>
+          <dd class="hero__stat-value">{{ stats[id] }}</dd>
+        </div>
+      }
+    </dl>
+  </div>
+</section>

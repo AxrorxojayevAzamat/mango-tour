@@ -1,3 +1,5 @@
+@use 'breakpoints' as bp;
+
 // Design tokens. The only place raw colour / size values live.
 // Brand colours sampled from docs/brand/logo-source.jpg (see scripts/brand.mjs).
 // Contrast ratios are WCAG 2.x against --color-bg (#0B0B0B).
@@ -90,6 +92,7 @@
   --duration-fast: 150ms;
   --duration-base: 250ms;
   --duration-slow: 600ms;
+  --duration-draw: 1800ms; // decorative flight-path line
 
   // Stacking
   --z-header: 100;
@@ -97,10 +100,17 @@
   --z-modal: 300;
 }
 
+@include bp.up(lg) {
+  :root {
+    --header-height: 4.5rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   :root {
     --duration-fast: 0ms;
     --duration-base: 0ms;
     --duration-slow: 0ms;
+    --duration-draw: 0ms;
   }
 }

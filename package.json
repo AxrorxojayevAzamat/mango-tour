@@ -9,7 +9,10 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test --watch=false",
     "test:watch": "ng test",
-    "brand": "node scripts/brand.mjs"
+    "brand": "node scripts/brand.mjs",
+    "images": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/images.mjs",
+    "prebuild": "npm run images",
+    "prestart": "npm run images"
   },
   "private": true,
   "packageManager": "npm@10.9.9",
