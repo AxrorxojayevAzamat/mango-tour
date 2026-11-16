@@ -1,11 +1,11 @@
 @let c = content();
 <section class="why-us" [id]="anchor" [attr.aria-labelledby]="anchor + '-title'">
   <div class="why-us__inner">
-    <app-section-heading appReveal [heading]="c" [titleId]="anchor + '-title'" />
+    <app-section-heading [heading]="c" [titleId]="anchor + '-title'" />
 
     <ul class="why-us__grid" role="list">
       @for (id of ids; track id) {
-        <li class="why-us__card" appReveal [revealDelay]="$index * 90">
+        <li class="why-us__card">
           <span class="why-us__icon">
             <app-icon [name]="icons[id]" />
           </span>

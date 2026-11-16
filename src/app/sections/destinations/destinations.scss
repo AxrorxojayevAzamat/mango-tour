@@ -1,4 +1,7 @@
 @use 'breakpoints' as bp;
+@use 'motion';
+
+@include motion.reveal-keyframes;
 
 :host {
   display: block;
@@ -38,6 +41,8 @@
 }
 
 .destinations__item {
+  @include motion.reveal;
+
   display: flex;
   flex-direction: column;
 }

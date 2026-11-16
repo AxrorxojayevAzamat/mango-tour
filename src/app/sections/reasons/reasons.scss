@@ -1,4 +1,7 @@
 @use 'breakpoints' as bp;
+@use 'motion';
+
+@include motion.reveal-keyframes;
 
 :host {
   display: block;
@@ -31,6 +34,8 @@
 }
 
 .reasons__card {
+  @include motion.reveal;
+
   position: relative;
   display: flex;
   flex-direction: column;

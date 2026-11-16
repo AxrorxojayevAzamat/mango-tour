@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core
 import type { FaqContent } from '../../../content/content.model';
 import { FAQ_IDS, FaqId, SECTION_IDS } from '../../../content/ids';
 import { Icon } from '../../shared/icon/icon';
-import { Reveal } from '../../shared/reveal/reveal';
 import { SectionHeading } from '../../shared/section-heading/section-heading';
 
 /**
@@ -11,7 +10,7 @@ import { SectionHeading } from '../../shared/section-heading/section-heading';
  */
 @Component({
   selector: 'app-faq',
-  imports: [Icon, Reveal, SectionHeading],
+  imports: [Icon, SectionHeading],
   templateUrl: './faq.html',
   styleUrl: './faq.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -6,7 +6,6 @@ import { fill } from '../../core/i18n/fill';
 import { Lang } from '../../core/i18n/languages';
 import { LeadPrefillService } from '../../core/lead/lead-prefill.service';
 import { PlaceCard } from '../../shared/place-card/place-card';
-import { Reveal } from '../../shared/reveal/reveal';
 import { SectionHeading } from '../../shared/section-heading/section-heading';
 
 export type DestinationKind = 'cities' | 'countries';
@@ -27,7 +26,7 @@ const SIZES = {
 /** "Cities of Uzbekistan" and "Central Asian countries": photo cards linking to the lead form. */
 @Component({
   selector: 'app-destinations',
-  imports: [PlaceCard, Reveal, SectionHeading],
+  imports: [PlaceCard, SectionHeading],
   templateUrl: './destinations.html',
   styleUrl: './destinations.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

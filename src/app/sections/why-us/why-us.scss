@@ -1,4 +1,7 @@
 @use 'breakpoints' as bp;
+@use 'motion';
+
+@include motion.reveal-keyframes;
 
 :host {
   display: block;
@@ -31,6 +34,8 @@
 }
 
 .why-us__card {
+  @include motion.reveal;
+
   display: flex;
   flex-direction: column;
   gap: var(--space-3);

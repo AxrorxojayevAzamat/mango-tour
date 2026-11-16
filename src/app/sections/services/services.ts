@@ -3,7 +3,6 @@ import type { CardSection } from '../../../content/content.model';
 import { SECTION_IDS, SERVICE_IDS, ServiceId } from '../../../content/ids';
 import { Icon } from '../../shared/icon/icon';
 import type { IconName } from '../../shared/icon/icons';
-import { Reveal } from '../../shared/reveal/reveal';
 import { SectionHeading } from '../../shared/section-heading/section-heading';
 
 const ICON_BY_SERVICE: Record<ServiceId, IconName> = {
@@ -16,7 +15,7 @@ const ICON_BY_SERVICE: Record<ServiceId, IconName> = {
 
 @Component({
   selector: 'app-services',
-  imports: [Icon, Reveal, SectionHeading],
+  imports: [Icon, SectionHeading],
   templateUrl: './services.html',
   styleUrl: './services.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

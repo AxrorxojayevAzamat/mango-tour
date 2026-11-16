@@ -104,7 +104,6 @@ export class LeadForm {
   /** Errors show after a field is touched OR after the first submit attempt. */
   protected readonly submitted = signal(false);
   protected readonly captchaToken = signal('');
-  protected readonly captchaUnavailable = signal(false);
 
   protected readonly cityOptions = computed(() =>
     CITY_IDS.map((id) => ({ id, name: this.cities().items[id].name })),
@@ -113,9 +112,8 @@ export class LeadForm {
     COUNTRY_IDS.map((id) => ({ id, name: this.countries().items[id].name })),
   );
 
-  protected readonly showCaptchaError = computed(
-    () => (this.submitted() && !this.captchaToken()) || this.captchaUnavailable(),
-  );
+  /** Only after a submit attempt — never shout at a visitor who has not done anything yet. */
+  protected readonly showCaptchaError = computed(() => this.submitted() && !this.captchaToken());
 
   private readonly captchaBox = viewChild.required<ElementRef<HTMLElement>>('captcha');
   private readonly successBox = viewChild<ElementRef<HTMLElement>>('success');
@@ -265,7 +263,7 @@ export class LeadForm {
         'error-callback': () => this.captchaToken.set(''),
       });
     } catch {
-      this.captchaUnavailable.set(true);
+      // Script blocked or offline: the token stays empty, so submitting shows the captcha error.
     }
   }
 

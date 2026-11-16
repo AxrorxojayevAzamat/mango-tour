@@ -1,11 +1,11 @@
 @let c = content();
 <section class="reasons" [id]="anchor" [attr.aria-labelledby]="anchor + '-title'">
   <div class="reasons__inner">
-    <app-section-heading appReveal [heading]="c" [titleId]="anchor + '-title'" />
+    <app-section-heading [heading]="c" [titleId]="anchor + '-title'" />
 
     <ol class="reasons__grid" role="list">
       @for (id of ids; track id) {
-        <li class="reasons__card" appReveal [revealDelay]="($index % 3) * 90">
+        <li class="reasons__card">
           <span class="reasons__number" aria-hidden="true">{{ number($index) }}</span>
           <h3 class="reasons__title">
             <span class="visually-hidden">{{ $index + 1 }}. </span>{{ c.items[id].title }}

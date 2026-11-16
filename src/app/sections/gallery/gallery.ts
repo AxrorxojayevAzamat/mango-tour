@@ -5,7 +5,6 @@ import { GALLERY_IDS, GalleryId, SECTION_IDS } from '../../../content/ids';
 import { SITE_CONFIG } from '../../../content/site-config';
 import { Icon } from '../../shared/icon/icon';
 import { Lightbox, LightboxImage } from '../../shared/lightbox/lightbox';
-import { Reveal } from '../../shared/reveal/reveal';
 import { SectionHeading } from '../../shared/section-heading/section-heading';
 
 /** Mosaic shape per photo. The grid uses `dense` flow, so 9 photos tile without holes. */
@@ -32,7 +31,7 @@ interface GalleryTile extends LightboxImage {
 
 @Component({
   selector: 'app-gallery',
-  imports: [NgOptimizedImage, Icon, Lightbox, Reveal, SectionHeading],
+  imports: [NgOptimizedImage, Icon, Lightbox, SectionHeading],
   templateUrl: './gallery.html',
   styleUrl: './gallery.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

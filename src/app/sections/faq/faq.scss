@@ -1,4 +1,7 @@
 @use 'breakpoints' as bp;
+@use 'motion';
+
+@include motion.reveal-keyframes;
 
 :host {
   display: block;
@@ -36,6 +39,8 @@
 }
 
 .faq__item {
+  @include motion.reveal;
+
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background-color: var(--color-surface);

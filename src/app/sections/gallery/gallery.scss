@@ -1,4 +1,7 @@
 @use 'breakpoints' as bp;
+@use 'motion';
+
+@include motion.reveal-keyframes;
 
 :host {
   display: block;
@@ -36,6 +39,8 @@
 }
 
 .gallery__item {
+  @include motion.reveal;
+
   display: flex;
 }
 

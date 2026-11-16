@@ -3,31 +3,54 @@
 
 <app-header [lang]="lang()" [nav]="c.nav" [(menuOpen)]="menuOpen" />
 
+<!--
+  Above the fold (header, hero) hydrates at once. Everything below is prerendered as full HTML
+  but hydrated only when it scrolls into view (incremental hydration), so the first load runs
+  far less JavaScript. `on immediate` renders the blocks right away on client-side navigation
+  (e.g. switching language).
+-->
 <main class="home-page__main" id="main" tabindex="-1" [inert]="menuOpen()">
   <app-hero [lang]="lang()" [content]="c.hero" />
-  <app-why-us [content]="c.whyUs" />
-  <app-services [content]="c.services" />
-  <app-reasons [content]="c.reasons" />
-  <app-destinations kind="cities" [lang]="lang()" [content]="c.cities" />
-  <app-destinations kind="countries" [lang]="lang()" [content]="c.countries" />
-  <app-gallery [content]="c.gallery" />
 
-  <app-lead-form
-    [lang]="lang()"
-    [content]="c.leadForm"
-    [cities]="c.cities"
-    [countries]="c.countries"
-  />
-
-  <app-faq [content]="c.faq" />
+  @defer (on immediate; hydrate on viewport) {
+    <app-why-us [content]="c.whyUs" />
+  }
+  @defer (on immediate; hydrate on viewport) {
+    <app-services [content]="c.services" />
+  }
+  @defer (on immediate; hydrate on viewport) {
+    <app-reasons [content]="c.reasons" />
+  }
+  @defer (on immediate; hydrate on viewport) {
+    <app-destinations kind="cities" [lang]="lang()" [content]="c.cities" />
+  }
+  @defer (on immediate; hydrate on viewport) {
+    <app-destinations kind="countries" [lang]="lang()" [content]="c.countries" />
+  }
+  @defer (on immediate; hydrate on viewport) {
+    <app-gallery [content]="c.gallery" />
+  }
+  @defer (on immediate; hydrate on viewport) {
+    <app-lead-form
+      [lang]="lang()"
+      [content]="c.leadForm"
+      [cities]="c.cities"
+      [countries]="c.countries"
+    />
+  }
+  @defer (on immediate; hydrate on viewport) {
+    <app-faq [content]="c.faq" />
+  }
 </main>
 
-<app-footer
-  [lang]="lang()"
-  [content]="c.footer"
-  [nav]="c.nav"
-  [messengerLabels]="c.floating"
-  [inert]="menuOpen()"
-/>
+@defer (on immediate; hydrate on viewport) {
+  <app-footer
+    [lang]="lang()"
+    [content]="c.footer"
+    [nav]="c.nav"
+    [messengerLabels]="c.floating"
+    [inert]="menuOpen()"
+  />
+}
 
 <app-floating-contacts [content]="c.floating" [hidden]="menuOpen()" />

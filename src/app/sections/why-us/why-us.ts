@@ -3,7 +3,6 @@ import type { CardSection } from '../../../content/content.model';
 import { ADVANTAGE_IDS, AdvantageId, SECTION_IDS } from '../../../content/ids';
 import { Icon } from '../../shared/icon/icon';
 import type { IconName } from '../../shared/icon/icons';
-import { Reveal } from '../../shared/reveal/reveal';
 import { SectionHeading } from '../../shared/section-heading/section-heading';
 
 const ICON_BY_ADVANTAGE: Record<AdvantageId, IconName> = {
@@ -15,7 +14,7 @@ const ICON_BY_ADVANTAGE: Record<AdvantageId, IconName> = {
 
 @Component({
   selector: 'app-why-us',
-  imports: [Icon, Reveal, SectionHeading],
+  imports: [Icon, SectionHeading],
   templateUrl: './why-us.html',
   styleUrl: './why-us.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

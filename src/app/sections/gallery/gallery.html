@@ -1,7 +1,7 @@
 @let c = content();
 <section class="gallery" [id]="anchor" [attr.aria-labelledby]="anchor + '-title'">
   <div class="gallery__inner">
-    <app-section-heading appReveal [heading]="c" [titleId]="anchor + '-title'" />
+    <app-section-heading [heading]="c" [titleId]="anchor + '-title'" />
 
     <ul class="gallery__grid" role="list">
       @for (tile of tiles(); track tile.id) {
@@ -10,8 +10,6 @@
           [class.gallery__item--hero]="tile.tile === 'hero'"
           [class.gallery__item--wide]="tile.tile === 'wide'"
           [class.gallery__item--tall]="tile.tile === 'tall'"
-          appReveal
-          [revealDelay]="($index % 4) * 70"
         >
           <button
             class="gallery__button"

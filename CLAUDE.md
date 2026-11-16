@@ -20,13 +20,15 @@ agency (Uzbekistan cities + Central Asia). Goal: collect free-consultation leads
 | Images | `NgOptimizedImage` + custom loader (`core/images/image-loader.ts`). `ngSrc` is the extension-less base path (from `SITE_CONFIG.images`). Sources live in `src/assets/images/<group>/<name>.jpg` (neutral placeholders until the client sends photos — see `docs/IMAGES.md`); `npm run images` (auto-run before `build`/`start`) writes `public/images/<group>/<name>-{240…1920}.webp` (git-ignored, incremental). `npm run images -- --placeholders` creates missing placeholder sources. Hero image gets `priority`. |
 | Page sections | Order in `HomePage`: header · hero · why-us · services · reasons · destinations(cities) · destinations(countries) · gallery · lead form (`#contact`, stage 5) · faq · footer · floating contacts. Cities/countries share one `app-destinations` component (`kind` input). |
 | Card → form hand-off | City/country CTAs call `LeadPrefillService.request(destinationId, comment)` (`core/lead/`) and link to `/{lang}#contact`; the lead form reacts to `pending()`. |
-| Motion | `appReveal` (`shared/reveal/`) fades elements in on first scroll into view via the Web Animations API — no global CSS; never hides what is already on screen; disabled under `prefers-reduced-motion`. |
+| Motion | Scroll-in reveal is pure CSS (scroll-driven animations): `@use 'motion'; @include motion.reveal-keyframes;` once per stylesheet, `@include motion.reveal;` on an element. No JS, works before hydration, progressive (no animation in browsers without `animation-timeline: view()` or under `prefers-reduced-motion`). Uses the `translate` property so it never fights hover `transform`s. |
+| Hydration | Incremental hydration (`withIncrementalHydration()`): header + hero hydrate at once; every other section is wrapped in `@defer (on immediate; hydrate on viewport)` in `home-page.html` — full prerendered HTML, JS loaded/hydrated only when scrolled into view. New below-the-fold sections must follow the same pattern. Code that measures layout must not depend on a section being hydrated. |
 | Overlays | Lightbox = native `<dialog>` + `showModal()` (focus trap, Escape, inert page). FAQ = native `<details name="faq">` (exclusive). Prefer native elements over hand-rolled ARIA widgets. |
 | Anchor links | In-page links are plain `href="/{lang}#{anchor}"` (never bare `#x`: `<base href="/">` would resolve it to `/#x`). The router scrolls to anchors; `Header` gives `ViewportScroller` the fixed-header offset. |
 | Forms → leads | `app-lead-form` (typed Reactive Forms) POSTs JSON to the Pages Function `functions/api/lead.ts` → Telegram bot. Validation rules live ONCE in `src/app/core/lead/lead-rules.ts` (framework-free) and are imported by both the form and the function. Pipeline: origin check → size → JSON → honeypot (`website`, silent fake success) → validation (422 + field codes) → KV rate-limit (5 / 10 min / hashed IP, binding `LEAD_RATE_LIMIT`, soft-fails open) → Turnstile siteverify → Telegram `sendMessage` (HTML, every value escaped, time in Asia/Tashkent). `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `TURNSTILE_SECRET_KEY` are **server-only**; never import `functions/` or these names from `src/`. |
 | Public build env | `scripts/env.mjs` (runs before build/start/test, reads `.env` locally) writes git-ignored `src/app/core/config/public-env.generated.ts` with ONLY public values: `TURNSTILE_SITE_KEY` (defaults to Cloudflare's always-pass test key) and `SITE_URL`. |
 | Cloudflare config | No `wrangler.toml`: env vars, secrets and the KV binding are set in the Pages dashboard (a `wrangler.toml` would make those read-only there). Local: `npm run dev:functions` (wrangler reads `.env`, in-memory KV). |
 | Deploy | Cloudflare Pages: build `npm run build`, output `dist/mango-tour/browser`, functions in `functions/`. |
+| SEO | `SeoService` (applied in `contentResolver`, so prerendered heads are complete): title, description, canonical, hreflang uz/en/ru + x-default, OG, Twitter, JSON-LD `@graph` (WebSite, TravelAgency, FAQPage) from `core/seo/structured-data.ts`. Placeholder contact data is never emitted (`isPlaceholder`). `postbuild` writes `sitemap.xml` + `robots.txt`; `public/404.html` (noindex) is the real 404; `public/_headers` sets security + cache headers. |
 | Site URL | Single source: `PUBLIC_ENV.siteUrl` from the `SITE_URL` build env (default `https://mango-tour.pages.dev` until the custom domain is connected). Used for canonical, hreflang, OG URLs, JSON-LD, sitemap and robots. |
 | Client data | Phone, address, email, Instagram, stats, etc. are **visible placeholders** like `+998 (XX) XXX-XX-XX`. Never invent real-looking data. |
 
@@ -54,7 +56,7 @@ scripts/               node build helpers (brand, postbuild, images, seo)
 src/
   content/             content.model.ts (SiteContent), ids.ts, site-config.ts (client data),
                        uz.ts / en.ts / ru.ts, content.spec.ts
-  styles/              _tokens, _reset, _typography (global) + _breakpoints (mixins only)
+  styles/              _tokens, _reset, _typography (global) + _breakpoints, _motion (mixins only)
   assets/brand/        vector sources
   app/
     core/              i18n (languages, guard, LanguageService, fill), content (resolver),
@@ -63,7 +65,7 @@ src/
     pages/home/        HomePage — composes all sections for one language
     sections/          header, lang-switcher, hero, footer, … (one BEM block each)
     shared/            reusable UI: icon (hand-drawn set in icons.ts), button, section-heading,
-                       place-card, lightbox, reveal directive
+                       place-card, lightbox, phone-mask
 ```
 
 ## Code style
