@@ -2,6 +2,7 @@ import { inject } from '@angular/core';
 import { RedirectCommand, ResolveFn, Router } from '@angular/router';
 import type { SiteContent } from '../../../content/content.model';
 import { LanguageService } from '../i18n/language.service';
+import { SeoService } from '../seo/seo.service';
 import { DEFAULT_LANG, Lang, isLang } from '../i18n/languages';
 
 /** One lazy chunk per language: a visitor only downloads the text they read. */
@@ -22,5 +23,9 @@ export const contentResolver: ResolveFn<SiteContent> = (route) => {
     return new RedirectCommand(router.parseUrl(`/${DEFAULT_LANG}`));
   }
   inject(LanguageService).use(lang);
-  return CONTENT_LOADERS[lang]();
+  const seo = inject(SeoService);
+  return CONTENT_LOADERS[lang]().then((content) => {
+    seo.apply(lang, content);
+    return content;
+  });
 };

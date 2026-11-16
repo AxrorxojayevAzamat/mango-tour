@@ -27,7 +27,7 @@ agency (Uzbekistan cities + Central Asia). Goal: collect free-consultation leads
 | Public build env | `scripts/env.mjs` (runs before build/start/test, reads `.env` locally) writes git-ignored `src/app/core/config/public-env.generated.ts` with ONLY public values: `TURNSTILE_SITE_KEY` (defaults to Cloudflare's always-pass test key) and `SITE_URL`. |
 | Cloudflare config | No `wrangler.toml`: env vars, secrets and the KV binding are set in the Pages dashboard (a `wrangler.toml` would make those read-only there). Local: `npm run dev:functions` (wrangler reads `.env`, in-memory KV). |
 | Deploy | Cloudflare Pages: build `npm run build`, output `dist/mango-tour/browser`, functions in `functions/`. |
-| Site URL | Not decided yet — read from `SITE_URL` env at build time; placeholder `https://mangotour.example`. |
+| Site URL | Single source: `PUBLIC_ENV.siteUrl` from the `SITE_URL` build env (default `https://mango-tour.pages.dev` until the custom domain is connected). Used for canonical, hreflang, OG URLs, JSON-LD, sitemap and robots. |
 | Client data | Phone, address, email, Instagram, stats, etc. are **visible placeholders** like `+998 (XX) XXX-XX-XX`. Never invent real-looking data. |
 
 ## Brand

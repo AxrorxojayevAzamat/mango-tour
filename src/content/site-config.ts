@@ -18,8 +18,6 @@ export const SITE_CONFIG = {
       country: 'UZ',
     },
   },
-  /** Production origin, no trailing slash. Overridden by `SITE_URL` at build time (stage 6). */
-  siteUrl: 'https://mangotour.example',
 
   contacts: {
     /** PLACEHOLDER. Display form. */
