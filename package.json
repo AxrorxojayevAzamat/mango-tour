@@ -14,7 +14,7 @@
     "prebuild": "npm run env && npm run images",
     "prestart": "npm run env && npm run images",
     "env": "node --env-file-if-exists=.env scripts/env.mjs",
-    "pretest": "npm run env",
+    "pretest": "npm run env && npm run images",
     "test:functions": "tsc -p functions/tsconfig.json && vitest run --config functions/vitest.config.mts",
     "dev:functions": "wrangler pages dev dist/mango-tour/browser --kv LEAD_RATE_LIMIT --port 8788"
   },

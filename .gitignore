@@ -56,3 +56,4 @@ Thumbs.db
 
 # Generated public build config (npm run env)
 /src/app/core/config/public-env.generated.ts
+/src/app/core/images/image-versions.generated.ts

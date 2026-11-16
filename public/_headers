@@ -15,11 +15,14 @@
 /media/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Photos and logo keep stable names (they can be replaced): cache for a week.
+# Photos are always requested with a content-hash query (?v=…, see image-loader.ts):
+# a replaced photo gets a new URL, so they can be cached forever too.
 /images/*
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+  Cache-Control: public, max-age=31536000, immutable
+
+# Logo files are also linked without a version (404 page, OG/JSON-LD): keep a short cache.
 /brand/*
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+  Cache-Control: public, max-age=86400, stale-while-revalidate=86400
 
 /api/*
   Cache-Control: no-store
