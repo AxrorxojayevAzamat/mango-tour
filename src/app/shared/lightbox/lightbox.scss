@@ -1,0 +1,125 @@
+@use 'breakpoints' as bp;
+
+:host {
+  display: contents;
+}
+
+.lightbox {
+  width: 100vw;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  padding: var(--space-16) var(--space-4);
+  border: 0;
+  background-color: transparent;
+  color: var(--color-text);
+  overflow: hidden;
+
+  &[open] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: lightbox-in var(--duration-base) var(--ease-out);
+  }
+
+  &::backdrop {
+    background-color: color-mix(in srgb, var(--color-bg) 94%, transparent);
+    backdrop-filter: blur(6px);
+  }
+
+  @include bp.up(md) {
+    padding: var(--space-12) var(--space-16);
+  }
+}
+
+@keyframes lightbox-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.lightbox__figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  max-width: 100%;
+  max-height: 100%;
+  touch-action: pan-y;
+}
+
+.lightbox__image {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: calc(100dvh - 10rem);
+  border-radius: var(--radius-md);
+  object-fit: contain;
+  user-select: none;
+}
+
+.lightbox__caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2) var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+.lightbox__counter {
+  color: var(--color-accent);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.lightbox__alt {
+  max-width: 40rem;
+}
+
+.lightbox__close,
+.lightbox__nav {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 50%;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+}
+
+.lightbox__close {
+  top: var(--space-4);
+  right: var(--space-4);
+}
+
+.lightbox__nav {
+  bottom: var(--space-4);
+
+  @include bp.up(md) {
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+  }
+}
+
+.lightbox__nav--prev {
+  left: var(--space-4);
+}
+
+.lightbox__nav--next {
+  right: var(--space-4);
+}

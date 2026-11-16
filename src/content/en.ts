@@ -335,11 +335,16 @@ export const en = {
     menuTitle: 'Menu',
     socialTitle: 'Social media',
     addressLabel: 'Address',
-    address: 'XXXXXXXX Street XX, Tashkent, Uzbekistan',
+    address:
+      '48 Kizilyulduz Street, Sergeli MFY, Yuqorichirchiq District, Tashkent Region, Uzbekistan',
     phoneLabel: 'Phone',
     emailLabel: 'Email',
     companyTitle: 'Company details',
-    companyDetails: ['“XXXXXXXX” LLC', 'TIN: XXXXXXXXX', 'Tour operator licence: No. XXXX'],
+    companyDetails: [
+      '“MANGOTOUR TRAVEL” LLC',
+      'TIN: 313 479 851',
+      'Tour operator licence: No. XXXX',
+    ],
     offerLink: 'Public offer',
     copyright: '© {year} mango_tour. All rights reserved.',
   },

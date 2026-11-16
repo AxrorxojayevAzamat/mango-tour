@@ -5,19 +5,23 @@
 
 <main class="home-page__main" id="main" tabindex="-1" [inert]="menuOpen()">
   <app-hero [lang]="lang()" [content]="c.hero" />
+  <app-why-us [content]="c.whyUs" />
+  <app-services [content]="c.services" />
+  <app-reasons [content]="c.reasons" />
+  <app-destinations kind="cities" [lang]="lang()" [content]="c.cities" />
+  <app-destinations kind="countries" [lang]="lang()" [content]="c.countries" />
+  <app-gallery [content]="c.gallery" />
 
-  <!-- TEMPORARY: replaced by real section components in stage 4. -->
-  @for (section of pendingSections(); track section.id) {
-    <section
-      class="home-page__pending"
-      [id]="section.id"
-      [attr.aria-labelledby]="section.id + '-title'"
-    >
-      <p class="home-page__eyebrow">{{ section.heading.eyebrow }}</p>
-      <h2 class="home-page__title" [id]="section.id + '-title'">{{ section.heading.title }}</h2>
-      <p class="home-page__subtitle">{{ section.heading.subtitle }}</p>
-    </section>
-  }
+  <!-- TEMPORARY: the lead form arrives in stage 5; the anchor already works. -->
+  <section
+    class="home-page__pending"
+    [id]="formAnchor"
+    [attr.aria-labelledby]="formAnchor + '-title'"
+  >
+    <app-section-heading [heading]="c.leadForm" [titleId]="formAnchor + '-title'" />
+  </section>
+
+  <app-faq [content]="c.faq" />
 </main>
 
 <app-footer
@@ -27,3 +31,5 @@
   [messengerLabels]="c.floating"
   [inert]="menuOpen()"
 />
+
+<app-floating-contacts [content]="c.floating" [hidden]="menuOpen()" />

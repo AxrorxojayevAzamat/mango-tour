@@ -1,0 +1,51 @@
+@use 'breakpoints' as bp;
+
+:host {
+  display: contents;
+}
+
+.floating-contacts {
+  position: fixed;
+  right: max(var(--space-4), env(safe-area-inset-right));
+  bottom: max(var(--space-4), env(safe-area-inset-bottom));
+  z-index: var(--z-floating);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition:
+    opacity var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+
+  @include bp.up(md) {
+    right: var(--space-6);
+    bottom: var(--space-6);
+  }
+}
+
+.floating-contacts--hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(var(--space-4));
+}
+
+.floating-contacts__link {
+  --icon-size: 1.5rem;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+  box-shadow: var(--shadow-glow);
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    background-color: var(--color-accent-hover);
+    transform: scale(1.06);
+  }
+}

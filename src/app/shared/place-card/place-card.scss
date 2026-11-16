@@ -1,0 +1,102 @@
+@use 'breakpoints' as bp;
+
+:host {
+  display: block;
+}
+
+.place-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--color-accent) 45%, transparent);
+    transform: translateY(-4px);
+  }
+}
+
+.place-card__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: var(--color-surface-raised);
+}
+
+// Spans two grid columns from md up: 8:3 keeps the photo as tall as its 4:3 neighbours.
+.place-card__media--wide {
+  @include bp.up(md) {
+    aspect-ratio: 8 / 3;
+  }
+}
+
+.place-card__image {
+  object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-out);
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.place-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-5) var(--space-6);
+}
+
+.place-card__name {
+  font-size: var(--font-size-xl);
+}
+
+.place-card__description {
+  flex: 1;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.place-card__cta {
+  --icon-size: 1.125rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 2.75rem;
+  margin-block-start: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  white-space: nowrap;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+
+  // Narrowest cards (4 columns at 1024–1279px): keep the longest label (ru) on one line.
+  @include bp.up(lg) {
+    font-size: var(--font-size-xs);
+  }
+
+  @include bp.up(xl) {
+    font-size: var(--font-size-sm);
+  }
+}

@@ -11,7 +11,8 @@
 // The list of images comes from SITE_CONFIG.images (src/content/site-config.ts); widths come
 // from IMAGE_WIDTHS, the same ladder the app's NgOptimizedImage loader requests.
 import sharp from 'sharp';
-import { mkdir, readdir, stat } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { mkdir, readFile, readdir, stat, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { SITE_CONFIG } from '../src/content/site-config.ts';
 import { IMAGE_WIDTHS } from '../src/app/core/images/image-widths.ts';
@@ -20,6 +21,8 @@ const SOURCE_ROOT = 'src/assets/images';
 const OUTPUT_ROOT = 'public';
 const SOURCE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp'];
 const WEBP = { quality: 78, effort: 5 };
+/** Content hash of each source at its last conversion (git-ignored), for incremental runs. */
+const MANIFEST = '.cache/images-manifest.json';
 
 /** Recommended source size per group — also used for placeholders and docs/IMAGES.md. */
 export const IMAGE_SPECS = {
@@ -78,19 +81,34 @@ async function createPlaceholder(base) {
   return path;
 }
 
-async function isFresh(source, outputs) {
-  const sourceTime = (await stat(source)).mtimeMs;
+const hashOf = async (path) =>
+  createHash('sha1')
+    .update(await readFile(path))
+    .digest('hex');
+
+async function loadManifest() {
+  try {
+    return JSON.parse(await readFile(MANIFEST, 'utf8'));
+  } catch {
+    return {};
+  }
+}
+
+/** Fresh = same source bytes as last time (content hash, not mtime) and every output exists. */
+async function isFresh(hash, previousHash, outputs) {
+  if (hash !== previousHash) return false;
   for (const output of outputs) {
-    const s = await exists(output);
-    if (!s || s.mtimeMs < sourceTime) return false;
+    if (!(await exists(output))) return false;
   }
   return true;
 }
 
-async function buildLadder(base, source) {
+async function buildLadder(base, source, manifest) {
   const outBase = join(OUTPUT_ROOT, base);
   const outputs = [`${outBase}.webp`, ...IMAGE_WIDTHS.map((w) => `${outBase}-${w}.webp`)];
-  if (await isFresh(source, outputs)) return 0;
+  const hash = await hashOf(source);
+  if (await isFresh(hash, manifest[base], outputs)) return 0;
+  manifest[base] = hash;
   await mkdir(dirname(outBase), { recursive: true });
   const image = sharp(source).rotate(); // honour EXIF orientation of phone photos
   await image
@@ -116,6 +134,7 @@ async function main() {
   const missing = [];
   let written = 0;
   let created = 0;
+  const manifest = await loadManifest();
 
   for (const base of imageBases()) {
     let source = await findSource(base);
@@ -127,8 +146,10 @@ async function main() {
       missing.push(base);
       continue;
     }
-    written += await buildLadder(base, source);
+    written += await buildLadder(base, source, manifest);
   }
+  await mkdir(dirname(MANIFEST), { recursive: true });
+  await writeFile(MANIFEST, JSON.stringify(manifest, null, 2));
 
   if (missing.length) {
     throw new Error(

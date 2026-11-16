@@ -1,0 +1,30 @@
+@let c = content();
+<aside
+  class="floating-contacts"
+  [class.floating-contacts--hidden]="hidden()"
+  [attr.aria-label]="c.label"
+  [attr.aria-hidden]="hidden() || null"
+>
+  <a
+    class="floating-contacts__link"
+    [href]="social.telegramUrl"
+    target="_blank"
+    rel="noopener"
+    [attr.aria-label]="c.telegram"
+    [attr.title]="c.telegram"
+    [attr.tabindex]="hidden() ? -1 : null"
+  >
+    <app-icon name="telegram" />
+  </a>
+  <a
+    class="floating-contacts__link"
+    [href]="social.whatsappUrl"
+    target="_blank"
+    rel="noopener"
+    [attr.aria-label]="c.whatsapp"
+    [attr.title]="c.whatsapp"
+    [attr.tabindex]="hidden() ? -1 : null"
+  >
+    <app-icon name="whatsapp" />
+  </a>
+</aside>

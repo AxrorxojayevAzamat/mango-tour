@@ -1,0 +1,40 @@
+@let c = content();
+<section class="gallery" [id]="anchor" [attr.aria-labelledby]="anchor + '-title'">
+  <div class="gallery__inner">
+    <app-section-heading appReveal [heading]="c" [titleId]="anchor + '-title'" />
+
+    <ul class="gallery__grid" role="list">
+      @for (tile of tiles(); track tile.id) {
+        <li
+          class="gallery__item"
+          [class.gallery__item--hero]="tile.tile === 'hero'"
+          [class.gallery__item--wide]="tile.tile === 'wide'"
+          [class.gallery__item--tall]="tile.tile === 'tall'"
+          appReveal
+          [revealDelay]="($index % 4) * 70"
+        >
+          <button
+            class="gallery__button"
+            type="button"
+            aria-haspopup="dialog"
+            [attr.aria-label]="c.openImage + ': ' + tile.alt"
+            (click)="lightbox().open($index)"
+          >
+            <img
+              class="gallery__image"
+              [ngSrc]="tile.base"
+              fill
+              [sizes]="tile.sizes"
+              [alt]="tile.alt"
+            />
+            <span class="gallery__zoom" aria-hidden="true">
+              <app-icon name="expand" />
+            </span>
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
+
+  <app-lightbox [images]="tiles()" [labels]="c.lightbox" />
+</section>

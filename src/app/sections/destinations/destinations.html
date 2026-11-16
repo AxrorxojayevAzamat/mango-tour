@@ -1,0 +1,33 @@
+@let c = content();
+<section
+  class="destinations"
+  [class.destinations--countries]="kind() === 'countries'"
+  [id]="anchor()"
+  [attr.aria-labelledby]="anchor() + '-title'"
+>
+  <div class="destinations__inner">
+    <app-section-heading appReveal [heading]="c" [titleId]="anchor() + '-title'" />
+
+    <ul class="destinations__grid" role="list">
+      @for (item of items(); track item.id) {
+        <li
+          class="destinations__item"
+          [class.destinations__item--featured]="item.featured"
+          appReveal
+          [revealDelay]="($index % 4) * 80"
+        >
+          <app-place-card
+            class="destinations__card"
+            [place]="item.place"
+            [image]="item.image"
+            [sizes]="item.sizes"
+            [featured]="item.featured"
+            [ctaLabel]="c.cta"
+            [ctaHref]="formHref()"
+            (consult)="consult(item)"
+          />
+        </li>
+      }
+    </ul>
+  </div>
+</section>

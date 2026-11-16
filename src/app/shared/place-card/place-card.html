@@ -1,0 +1,15 @@
+@let p = place();
+<article class="place-card">
+  <div class="place-card__media" [class.place-card__media--wide]="featured()">
+    <img class="place-card__image" [ngSrc]="image()" fill [sizes]="sizes()" [alt]="p.imageAlt" />
+  </div>
+  <div class="place-card__body">
+    <h3 class="place-card__name">{{ p.name }}</h3>
+    <p class="place-card__description">{{ p.description }}</p>
+    <a class="place-card__cta" [href]="ctaHref()" (click)="consult.emit()">
+      {{ ctaLabel() }}
+      <span class="visually-hidden">— {{ p.name }}</span>
+      <app-icon class="place-card__cta-icon" name="arrow-right" />
+    </a>
+  </div>
+</article>

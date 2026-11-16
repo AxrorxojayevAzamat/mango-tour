@@ -1,15 +1,35 @@
-import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
 import type { SiteContent } from '../../../content/content.model';
 import { SECTION_IDS } from '../../../content/ids';
 import { Lang } from '../../core/i18n/languages';
+import { Destinations } from '../../sections/destinations/destinations';
+import { Faq } from '../../sections/faq/faq';
+import { FloatingContacts } from '../../sections/floating-contacts/floating-contacts';
 import { Footer } from '../../sections/footer/footer';
+import { Gallery } from '../../sections/gallery/gallery';
 import { Header } from '../../sections/header/header';
 import { Hero } from '../../sections/hero/hero';
+import { Reasons } from '../../sections/reasons/reasons';
+import { Services } from '../../sections/services/services';
+import { WhyUs } from '../../sections/why-us/why-us';
+import { SectionHeading } from '../../shared/section-heading/section-heading';
 
-/** The whole landing page for one language. */
+/** The whole landing page for one language, top to bottom. */
 @Component({
   selector: 'app-home-page',
-  imports: [Header, Hero, Footer],
+  imports: [
+    Header,
+    Hero,
+    WhyUs,
+    Services,
+    Reasons,
+    Destinations,
+    Gallery,
+    Faq,
+    Footer,
+    FloatingContacts,
+    SectionHeading,
+  ],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,18 +43,5 @@ export class HomePage {
   /** While the mobile menu is open, everything behind it is `inert`. */
   protected readonly menuOpen = signal(false);
 
-  /** TEMPORARY (stage 4 replaces these with real section components). */
-  protected readonly pendingSections = computed(() => {
-    const c = this.content();
-    return [
-      { id: SECTION_IDS.whyUs, heading: c.whyUs },
-      { id: SECTION_IDS.services, heading: c.services },
-      { id: SECTION_IDS.reasons, heading: c.reasons },
-      { id: SECTION_IDS.cities, heading: c.cities },
-      { id: SECTION_IDS.countries, heading: c.countries },
-      { id: SECTION_IDS.gallery, heading: c.gallery },
-      { id: SECTION_IDS.leadForm, heading: c.leadForm },
-      { id: SECTION_IDS.faq, heading: c.faq },
-    ];
-  });
+  protected readonly formAnchor = SECTION_IDS.leadForm;
 }

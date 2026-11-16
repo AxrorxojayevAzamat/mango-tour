@@ -18,6 +18,10 @@ agency (Uzbekistan cities + Central Asia). Goal: collect free-consultation leads
 | Font | Manrope Variable, self-hosted via `@fontsource-variable/manrope` (latin, latin-ext, cyrillic). |
 | Uzbek apostrophes | Manrope has **no U+02BB/U+02BC**. In Uzbek text write oʻ/gʻ with **U+2018** (`O‘zbekiston`, `G‘ijduvon`) and the tutuq belgisi with **U+2019** (`san’at`, `qal’a`). Never a plain `'`. Enforced by `content.spec.ts`. |
 | Images | `NgOptimizedImage` + custom loader (`core/images/image-loader.ts`). `ngSrc` is the extension-less base path (from `SITE_CONFIG.images`). Sources live in `src/assets/images/<group>/<name>.jpg` (neutral placeholders until the client sends photos — see `docs/IMAGES.md`); `npm run images` (auto-run before `build`/`start`) writes `public/images/<group>/<name>-{240…1920}.webp` (git-ignored, incremental). `npm run images -- --placeholders` creates missing placeholder sources. Hero image gets `priority`. |
+| Page sections | Order in `HomePage`: header · hero · why-us · services · reasons · destinations(cities) · destinations(countries) · gallery · lead form (`#contact`, stage 5) · faq · footer · floating contacts. Cities/countries share one `app-destinations` component (`kind` input). |
+| Card → form hand-off | City/country CTAs call `LeadPrefillService.request(destinationId, comment)` (`core/lead/`) and link to `/{lang}#contact`; the lead form reacts to `pending()`. |
+| Motion | `appReveal` (`shared/reveal/`) fades elements in on first scroll into view via the Web Animations API — no global CSS; never hides what is already on screen; disabled under `prefers-reduced-motion`. |
+| Overlays | Lightbox = native `<dialog>` + `showModal()` (focus trap, Escape, inert page). FAQ = native `<details name="faq">` (exclusive). Prefer native elements over hand-rolled ARIA widgets. |
 | Anchor links | In-page links are plain `href="/{lang}#{anchor}"` (never bare `#x`: `<base href="/">` would resolve it to `/#x`). The router scrolls to anchors; `Header` gives `ViewportScroller` the fixed-header offset. |
 | Forms → leads | Cloudflare Pages Function `functions/api/lead.ts` → Telegram bot. `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `TURNSTILE_SECRET_KEY` are **server-only env vars**; never import or reference them from `src/`. Spam: honeypot + Cloudflare Turnstile. Rate-limit: Cloudflare KV. |
 | Deploy | Cloudflare Pages: build `npm run build`, output `dist/mango-tour/browser`, functions in `functions/`. |
@@ -55,7 +59,8 @@ src/
                        images (loader), seo, …
     pages/home/        HomePage — composes all sections for one language
     sections/          header, lang-switcher, hero, footer, … (one BEM block each)
-    shared/            reusable UI: icon (hand-drawn set in icons.ts), button, lightbox, …
+    shared/            reusable UI: icon (hand-drawn set in icons.ts), button, section-heading,
+                       place-card, lightbox, reveal directive
 ```
 
 ## Code style

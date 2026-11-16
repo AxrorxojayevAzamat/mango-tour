@@ -52,3 +52,4 @@ Thumbs.db
 
 # Generated responsive images (npm run images)
 /public/images/
+/.cache/

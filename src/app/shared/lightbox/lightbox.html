@@ -1,0 +1,52 @@
+@let l = labels();
+<dialog
+  #dialog
+  class="lightbox"
+  [attr.aria-label]="l.label"
+  (close)="onClosed()"
+  (keydown)="onKeydown($event)"
+  (click)="onDialogClick($event)"
+>
+  @if (current(); as image) {
+    <figure
+      class="lightbox__figure"
+      (pointerdown)="onPointerDown($event)"
+      (pointerup)="onPointerUp($event)"
+    >
+      <img
+        class="lightbox__image"
+        [src]="src()"
+        [srcset]="srcset()"
+        sizes="(min-width: 1024px) 80vw, 100vw"
+        width="1920"
+        height="1280"
+        [alt]="image.alt"
+        decoding="async"
+      />
+      <figcaption class="lightbox__caption">
+        <span class="lightbox__counter" aria-live="polite">{{ counter() }}</span>
+        <span class="lightbox__alt">{{ image.alt }}</span>
+      </figcaption>
+    </figure>
+  }
+
+  <button class="lightbox__close" type="button" [attr.aria-label]="l.close" (click)="close()">
+    <app-icon name="close" />
+  </button>
+  <button
+    class="lightbox__nav lightbox__nav--prev"
+    type="button"
+    [attr.aria-label]="l.previous"
+    (click)="previous()"
+  >
+    <app-icon name="chevron-left" />
+  </button>
+  <button
+    class="lightbox__nav lightbox__nav--next"
+    type="button"
+    [attr.aria-label]="l.next"
+    (click)="next()"
+  >
+    <app-icon name="chevron-right" />
+  </button>
+</dialog>

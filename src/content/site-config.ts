@@ -6,6 +6,18 @@ import type { CityId, CountryId, GalleryId, StatId } from './ids';
  */
 export const SITE_CONFIG = {
   brandName: 'mango_tour',
+
+  /** From the state registration certificate (12.11.2026). */
+  company: {
+    legalName: 'MANGOTOUR TRAVEL',
+    taxId: '313479851',
+    address: {
+      street: 'Kizilyulduz ko‘chasi, 48-uy, Sergeli MFY',
+      locality: 'Yuqorichirchiq tumani',
+      region: 'Toshkent viloyati',
+      country: 'UZ',
+    },
+  },
   /** Production origin, no trailing slash. Overridden by `SITE_URL` at build time (stage 6). */
   siteUrl: 'https://mangotour.example',
 

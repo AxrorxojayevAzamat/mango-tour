@@ -1,0 +1,30 @@
+@let c = content();
+<section class="faq" [id]="anchor" [attr.aria-labelledby]="anchor + '-title'">
+  <div class="faq__inner">
+    <div class="faq__intro">
+      <app-section-heading appReveal [heading]="c" [titleId]="anchor + '-title'" />
+    </div>
+
+    <div class="faq__list" appReveal>
+      @for (id of ids; track id) {
+        <details
+          #details
+          class="faq__item"
+          [class.faq__item--open]="openId() === id"
+          name="faq"
+          (toggle)="onToggle(id, details)"
+        >
+          <summary class="faq__question">
+            <span class="faq__question-text">{{ c.items[id].question }}</span>
+            <app-icon
+              class="faq__chevron"
+              [class.faq__chevron--open]="openId() === id"
+              name="chevron-down"
+            />
+          </summary>
+          <p class="faq__answer">{{ c.items[id].answer }}</p>
+        </details>
+      }
+    </div>
+  </div>
+</section>
