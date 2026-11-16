@@ -26,17 +26,17 @@
 }
 
 .destinations__grid {
-  --place-card-grid-gap: var(--space-5);
-
   display: grid;
-  gap: var(--place-card-grid-gap);
+  gap: var(--space-5);
 
   @include bp.up(md) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  // 12-column track on desktop: cards span 3 (4 per row) — cities' wide cards span 4, so the
+  // 4 square cities sit above 3 wide ones, mirroring the client's layout.
   @include bp.up(lg) {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(12, minmax(0, 1fr));
   }
 }
 
@@ -45,15 +45,33 @@
 
   display: flex;
   flex-direction: column;
+
+  @include bp.up(lg) {
+    grid-column: span 3;
+  }
+}
+
+.destinations__item--wide {
+  @include bp.up(lg) {
+    grid-column: span 4;
+  }
+}
+
+// 7 cities in 2 columns leave the last one alone: centre it at single-card width.
+.destinations__item--solo {
+  @include bp.up(md) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc((100% - var(--space-5)) / 2);
+  }
+
+  @include bp.up(lg) {
+    grid-column: span 4;
+    justify-self: stretch;
+    width: auto;
+  }
 }
 
 .destinations__card {
   flex: 1;
-}
-
-// First city spans two columns: 7 cities fill a 2- or 4-column grid with no gap.
-.destinations__item--featured {
-  @include bp.up(md) {
-    grid-column: span 2;
-  }
 }

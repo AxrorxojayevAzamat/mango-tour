@@ -1,6 +1,10 @@
 @let p = place();
 <article class="place-card">
-  <div class="place-card__media" [class.place-card__media--wide]="featured()">
+  <div
+    class="place-card__media"
+    [class.place-card__media--wide]="shape() === 'wide'"
+    [class.place-card__media--portrait]="shape() === 'portrait'"
+  >
     <img class="place-card__image" [ngSrc]="image()" fill [sizes]="sizes()" [alt]="p.imageAlt" />
   </div>
   <div class="place-card__body">

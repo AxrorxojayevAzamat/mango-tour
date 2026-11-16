@@ -9,14 +9,18 @@
     <app-section-heading [heading]="c" [titleId]="anchor() + '-title'" />
 
     <ul class="destinations__grid" role="list">
-      @for (item of items(); track item.id) {
-        <li class="destinations__item" [class.destinations__item--featured]="item.featured">
+      @for (item of items(); track item.id; let last = $last) {
+        <li
+          class="destinations__item"
+          [class.destinations__item--wide]="item.shape === 'wide'"
+          [class.destinations__item--solo]="last && kind() === 'cities'"
+        >
           <app-place-card
             class="destinations__card"
             [place]="item.place"
             [image]="item.image"
             [sizes]="item.sizes"
-            [featured]="item.featured"
+            [shape]="item.shape"
             [ctaLabel]="c.cta"
             [ctaHref]="formHref()"
             (consult)="consult(item)"

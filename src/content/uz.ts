@@ -142,43 +142,43 @@ export const uz = {
         name: 'Toshkent',
         description:
           'Zamonaviy poytaxt: san’at asari kabi bezatilgan metro bekatlari, Chorsu bozori va Hazrati Imom majmuasi.',
-        imageAlt: 'Toshkentdagi Hazrati Imom majmuasi',
+        imageAlt: 'Toshkent teleminorasi illyustratsiyasi',
       },
       samarkand: {
         name: 'Samarqand',
         description:
           'Registon, Go‘ri Amir va Shohi Zinda — Amir Temur davri me’morchiligining eng yorqin namunalari.',
-        imageAlt: 'Samarqanddagi Registon maydoni madrasalari',
+        imageAlt: 'Samarqanddagi Registon madrasasi illyustratsiyasi',
       },
       bukhara: {
         name: 'Buxoro',
         description:
           'Ikki yarim ming yillik tarixga ega shahar: Poi Kalon majmuasi, Ark qal’asi va Labi Hovuz atrofidagi tor ko‘chalar.',
-        imageAlt: 'Buxorodagi Poi Kalon minorasi va masjidi',
+        imageAlt: 'Buxorodagi Ark qal’asi darvozasi illyustratsiyasi',
       },
       khiva: {
         name: 'Xiva',
         description:
           'Ichan qal’a devorlari ichidagi shahar-muzey: minoralar, saroylar va kechki loy devorlar ustidagi oltin quyosh.',
-        imageAlt: 'Xivadagi Ichan qal’a devorlari va Kalta minor',
+        imageAlt: 'Xivadagi Kalta minor va Ichan qal’a devorlari illyustratsiyasi',
       },
       fergana: {
         name: 'Farg‘ona vodiysi',
         description:
           'Marg‘ilonning ipak ustaxonalari, Rishton kulollari va Qo‘qon saroylari — hunarmandlar vodiysi.',
-        imageAlt: 'Marg‘ilondagi atlas to‘qish ustaxonasi',
+        imageAlt: 'Farg‘ona vodiysi: qorli tog‘lar etagidagi yashil dalalar illyustratsiyasi',
       },
       shakhrisabz: {
         name: 'Shahrisabz',
         description:
           'Amir Temurning vatani: Oqsaroy saroyi qoldiqlari va tog‘lar etagidagi yashil shahar.',
-        imageAlt: 'Shahrisabzdagi Oqsaroy peshtoqi qoldiqlari',
+        imageAlt: 'Shahrisabzdagi Oqsaroy peshtoqi illyustratsiyasi',
       },
       nukus: {
         name: 'Nukus',
         description:
           'Savitskiy nomidagi san’at muzeyining noyob avangard to‘plami va Orol dengizi tomon sayohat boshlanadigan nuqta.',
-        imageAlt: 'Nukusdagi Savitskiy nomidagi san’at muzeyi',
+        imageAlt: 'Nukusdagi oq ustunli muzey binosi illyustratsiyasi',
       },
     },
   },
@@ -194,25 +194,26 @@ export const uz = {
         name: 'Qozog‘iston',
         description:
           'Olmaotaning tog‘ ko‘llari, Charin kanyoni va bepoyon dashtlar — katta masofalar va yorqin manzaralar.',
-        imageAlt: 'Qozog‘istondagi Charin kanyoni',
+        imageAlt: 'Ko‘k gumbazli va naqshinkor minorali qadimiy maqbara illyustratsiyasi',
       },
       kyrgyzstan: {
         name: 'Qirg‘iziston',
         description:
           'Issiqko‘l sohili, yaylovdagi o‘tovlar va otda sayr — tog‘lar va ko‘chmanchi madaniyati mamlakati.',
-        imageAlt: 'Qirg‘iziston tog‘laridagi yaylov va o‘tovlar',
+        imageAlt: 'Qorli tog‘lar etagidagi o‘tov illyustratsiyasi',
       },
       tajikistan: {
         name: 'Tojikiston',
         description:
           'Pomir trakti, Fan tog‘lari va Iskandarko‘l — haqiqiy tog‘ sarguzashtini sevuvchilar uchun.',
-        imageAlt: 'Tojikistondagi Iskandarko‘l',
+        imageAlt: 'Dushanbedagi Ismoil Somoniy yodgorligi illyustratsiyasi',
       },
       turkmenistan: {
         name: 'Turkmaniston',
         description:
           'Qadimiy Marv xarobalari, oq marmarli Ashxobod va Qoraqumdagi Darvoza gaz krateri.',
-        imageAlt: 'Turkmanistondagi Darvoza gaz krateri kechasi',
+        imageAlt:
+          'Ashxobod: naqshinkor minora, oltin ot haykali va oq marmar binolar illyustratsiyasi',
       },
     },
   },

@@ -1,6 +1,7 @@
 # Saytdagi rasmlar ro‘yxati
 
-Hozir saytda **21 ta neytral placeholder** turibdi. Har birining pastki o‘ng burchagida uning nomi
+Hozir saytda shahar va davlatlar uchun **11 ta mijoz illyustratsiyasi** va qolgan joylar uchun
+**10 ta neytral placeholder** (hero + galereya) turibdi. Placeholder'larning pastki o‘ng burchagida nomi
 va kerakli o‘lchami yozilgan. Haqiqiy suratlarni mijoz beradi.
 
 ## Rasmni qanday almashtirish kerak
@@ -30,29 +31,35 @@ va kerakli o‘lchami yozilgan. Haqiqiy suratlarni mijoz beradi.
 Bu rasm sahifa ochilishi bilan birinchi yuklanadi, shuning uchun uni katta qilib yubormang:
 1920px kenglik yetarli.
 
-## 2. O‘zbekiston shaharlari (`#cities`)
+## 2. O‘zbekiston shaharlari (`#cities`) — ✅ mijoz illyustratsiyalari qo‘yilgan
 
-Kartochkalarda 4:3, Toshkent kartochkasi esa kengroq (8:3) kesib ko‘rsatiladi. Shuning uchun
-asosiy obyekt kadr markazida tursin.
+Kartochkalar mijoz bergan maket bo‘yicha joylashgan: desktopda yuqorida **4 ta kvadrat**,
+pastda **3 ta keng** kartochka; planshetda 2 ustun; telefonda 1 ustun. Rasm pastki qismi
+(binolar) doim ko‘rinadi, kesilsa — osmon kesiladi.
 
-| Fayl | O‘lcham | Nima tasvirlanishi kerak |
-|---|---|---|
-| `cities/tashkent.jpg` | 1600×1200 | Toshkent: Hazrati Imom majmuasi yoki metro bekati, zamonaviy shahar manzarasi |
-| `cities/samarkand.jpg` | 1600×1200 | Samarqand: Registon maydoni madrasalari |
-| `cities/bukhara.jpg` | 1600×1200 | Buxoro: Poi Kalon minorasi va masjidi |
-| `cities/khiva.jpg` | 1600×1200 | Xiva: Ichan qal’a devorlari, Kalta minor |
-| `cities/fergana.jpg` | 1600×1200 | Farg‘ona vodiysi: Marg‘ilondagi atlas ustaxonasi yoki Rishton kulollari |
-| `cities/shakhrisabz.jpg` | 1600×1200 | Shahrisabz: Oqsaroy peshtoqi qoldiqlari |
-| `cities/nukus.jpg` | 1600×1200 | Nukus: Savitskiy nomidagi san’at muzeyi yoki Orol bo‘yi manzarasi |
+| Fayl | Shakl | Hozirgi o‘lcham | Yaxshiroq sifat uchun tavsiya | Tasvir |
+|---|---|---|---|---|
+| `cities/tashkent.jpg` | kvadrat 1:1 | 684×688 | 1200×1200 | Toshkent teleminorasi |
+| `cities/samarkand.jpg` | kvadrat 1:1 | 682×688 | 1200×1200 | Registon madrasasi |
+| `cities/bukhara.jpg` | kvadrat 1:1 | 680×688 | 1200×1200 | Ark qal’asi darvozasi |
+| `cities/khiva.jpg` | kvadrat 1:1 | 686×688 | 1200×1200 | Kalta minor va Ichan qal’a |
+| `cities/fergana.jpg` | keng 3:2 | 936×642 | 1500×1000 | tog‘lar etagidagi vodiy |
+| `cities/shakhrisabz.jpg` | keng 3:2 | 952×642 | 1500×1000 | Oqsaroy peshtoqi |
+| `cities/nukus.jpg` | keng 3:2 | 932×596 | 1500×1000 | ustunli muzey binosi |
 
-## 3. Markaziy Osiyo davlatlari (`#countries`)
+## 3. Markaziy Osiyo davlatlari (`#countries`) — ✅ mijoz illyustratsiyalari qo‘yilgan
 
-| Fayl | O‘lcham | Nima tasvirlanishi kerak |
-|---|---|---|
-| `countries/kazakhstan.jpg` | 1600×1200 | Qozog‘iston: Charin kanyoni yoki Olmaota tog‘ ko‘llari |
-| `countries/kyrgyzstan.jpg` | 1600×1200 | Qirg‘iziston: Issiqko‘l, tog‘ yaylovidagi o‘tovlar |
-| `countries/tajikistan.jpg` | 1600×1200 | Tojikiston: Iskandarko‘l, Fan tog‘lari yoki Pomir trakti |
-| `countries/turkmenistan.jpg` | 1600×1200 | Turkmaniston: Darvoza gaz krateri, Ashxobod yoki Marv |
+| Fayl | Shakl | Hozirgi o‘lcham | Yaxshiroq sifat uchun tavsiya | Tasvir |
+|---|---|---|---|---|
+| `countries/kazakhstan.jpg` | tik 8:9 | 682×766 | 1200×1350 | ko‘k gumbazli maqbara |
+| `countries/kyrgyzstan.jpg` | tik 8:9 | 684×766 | 1200×1350 | tog‘lar etagidagi o‘tov |
+| `countries/tajikistan.jpg` | tik 8:9 | 684×766 | 1200×1350 | Ismoil Somoniy yodgorligi |
+| `countries/turkmenistan.jpg` | tik 8:9 | 682×766 | 1200×1350 | Ashxobod: minora, oltin ot |
+
+> Bu 11 ta illyustratsiya mijoz yuborgan maket rasmlaridan kesib olingan va 2× kattalashtirilgan
+> (maketdagi asl o‘lcham ~350–480px edi). Telefonlarda tiniqroq chiqishi uchun illyustratsiyalarning
+> **asl, katta faylarini** (yoki SVG) bersangiz, ular shu nomlar bilan almashtiriladi.
+> Rasm almashtirilsa, `src/content/{uz,en,ru}.ts` dagi `imageAlt` matnlarini ham moslang.
 
 ## 4. Galereya (`#gallery`)
 

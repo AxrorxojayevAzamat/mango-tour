@@ -139,43 +139,43 @@ export const en = {
         name: 'Tashkent',
         description:
           'A modern capital with metro stations decorated like works of art, the Chorsu Bazaar and the Hazrati Imam complex.',
-        imageAlt: 'Hazrati Imam complex in Tashkent',
+        imageAlt: 'Illustration of the Tashkent TV Tower',
       },
       samarkand: {
         name: 'Samarkand',
         description:
           'Registan, Gur-e-Amir and Shah-i-Zinda — the finest examples of Timurid-era architecture.',
-        imageAlt: 'The madrasahs of Registan Square in Samarkand',
+        imageAlt: 'Illustration of a Registan madrasah in Samarkand',
       },
       bukhara: {
         name: 'Bukhara',
         description:
           'A city with 2,500 years of history: the Poi Kalyan ensemble, the Ark fortress and the lanes around Lyabi-Hauz.',
-        imageAlt: 'Kalyan Minaret and Mosque in Bukhara',
+        imageAlt: 'Illustration of the Ark fortress gate in Bukhara',
       },
       khiva: {
         name: 'Khiva',
         description:
           'A museum-city inside the walls of Itchan Kala: minarets, palaces and golden sunsets over clay walls.',
-        imageAlt: 'Itchan Kala walls and the Kalta Minor minaret in Khiva',
+        imageAlt: 'Illustration of the Kalta Minor minaret and the Itchan Kala walls in Khiva',
       },
       fergana: {
         name: 'Fergana Valley',
         description:
           'Silk workshops in Margilan, the potters of Rishtan and the palaces of Kokand — the valley of artisans.',
-        imageAlt: 'An ikat silk weaving workshop in Margilan',
+        imageAlt: 'Illustration of the Fergana Valley: green fields below snowy mountains',
       },
       shakhrisabz: {
         name: 'Shakhrisabz',
         description:
           'The birthplace of Amir Timur: the remains of the Ak-Saray palace and a green town at the foot of the mountains.',
-        imageAlt: 'Remains of the Ak-Saray palace portal in Shakhrisabz',
+        imageAlt: 'Illustration of the Ak-Saray palace portal in Shakhrisabz',
       },
       nukus: {
         name: 'Nukus',
         description:
           'Home to the Savitsky Museum’s unique avant-garde collection and the starting point for trips to the Aral Sea.',
-        imageAlt: 'The Savitsky Art Museum in Nukus',
+        imageAlt: 'Illustration of a white colonnaded museum building in Nukus',
       },
     },
   },
@@ -191,25 +191,26 @@ export const en = {
         name: 'Kazakhstan',
         description:
           'Mountain lakes near Almaty, the Charyn Canyon and endless steppe — vast distances and bold landscapes.',
-        imageAlt: 'Charyn Canyon in Kazakhstan',
+        imageAlt: 'Illustration of an ancient blue-domed mausoleum with tiled minarets',
       },
       kyrgyzstan: {
         name: 'Kyrgyzstan',
         description:
           'The shores of Issyk-Kul, yurts on summer pastures and horseback rides — a land of mountains and nomadic culture.',
-        imageAlt: 'Yurts on a mountain pasture in Kyrgyzstan',
+        imageAlt: 'Illustration of a yurt below snow-capped mountains',
       },
       tajikistan: {
         name: 'Tajikistan',
         description:
           'The Pamir Highway, the Fann Mountains and Iskanderkul Lake — for lovers of real mountain adventure.',
-        imageAlt: 'Iskanderkul Lake in Tajikistan',
+        imageAlt: 'Illustration of the Ismoil Somoni monument in Dushanbe',
       },
       turkmenistan: {
         name: 'Turkmenistan',
         description:
           'The ancient ruins of Merv, white-marble Ashgabat and the Darvaza gas crater in the Karakum desert.',
-        imageAlt: 'The Darvaza gas crater in Turkmenistan at night',
+        imageAlt:
+          'Illustration of Ashgabat: a tiled tower, a golden horse statue and white-marble buildings',
       },
     },
   },

@@ -5,7 +5,6 @@
 }
 
 .place-card {
-  container-type: inline-size;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -23,24 +22,25 @@
   }
 }
 
+// Square by default; modifiers follow the source illustrations' proportions.
 .place-card__media {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1;
   overflow: hidden;
   background-color: var(--color-surface-raised);
 }
 
-// Spans two grid columns (plus the gap between them) from md up. Height = one 4:3 neighbour:
-// ((card width − grid gap) / 2) × 3/4. The grid passes its gap in --place-card-grid-gap.
 .place-card__media--wide {
-  @include bp.up(md) {
-    aspect-ratio: auto;
-    height: calc((100cqw - var(--place-card-grid-gap, var(--space-5))) * 0.375);
-  }
+  aspect-ratio: 3 / 2;
+}
+
+.place-card__media--portrait {
+  aspect-ratio: 8 / 9;
 }
 
 .place-card__image {
   object-fit: cover;
+  object-position: center bottom; // landmarks sit at the bottom, sky at the top
   transition: transform var(--duration-slow) var(--ease-out);
 
   &:hover {

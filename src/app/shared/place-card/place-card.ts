@@ -3,7 +3,10 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
 import type { PlaceText } from '../../../content/content.model';
 import { Icon } from '../icon/icon';
 
-/** Photo card for a city or country with a "get a consultation" link to the lead form. */
+/** Media proportions; they match the client's illustrations so nothing important is cropped. */
+export type PlaceShape = 'square' | 'wide' | 'portrait';
+
+/** Image card for a city or country with a "get a consultation" link to the lead form. */
 @Component({
   selector: 'app-place-card',
   imports: [NgOptimizedImage, Icon],
@@ -20,8 +23,7 @@ export class PlaceCard {
   readonly ctaLabel = input.required<string>();
   /** Lead-form anchor on the current language page, e.g. `/uz#contact`. */
   readonly ctaHref = input.required<string>();
-  /** Wider card with a larger photo (first city). */
-  readonly featured = input(false);
+  readonly shape = input<PlaceShape>('square');
 
   /** Fired before the browser follows `ctaHref`, so the form can be pre-filled. */
   readonly consult = output<void>();

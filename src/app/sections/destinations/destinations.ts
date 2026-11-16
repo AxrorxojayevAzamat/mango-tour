@@ -5,7 +5,7 @@ import { SITE_CONFIG } from '../../../content/site-config';
 import { fill } from '../../core/i18n/fill';
 import { Lang } from '../../core/i18n/languages';
 import { LeadPrefillService } from '../../core/lead/lead-prefill.service';
-import { PlaceCard } from '../../shared/place-card/place-card';
+import { PlaceCard, PlaceShape } from '../../shared/place-card/place-card';
 import { SectionHeading } from '../../shared/section-heading/section-heading';
 
 export type DestinationKind = 'cities' | 'countries';
@@ -14,13 +14,17 @@ interface DestinationItem {
   readonly id: DestinationId;
   readonly place: PlaceText;
   readonly image: string;
-  readonly featured: boolean;
+  readonly shape: PlaceShape;
   readonly sizes: string;
 }
 
-const SIZES = {
-  regular: '(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw',
-  featured: '(min-width: 1024px) 50vw, 100vw',
+/** Cities: 4 square cards on the first desktop row, the remaining 3 wider ones below. */
+const SQUARE_CITIES = 4;
+
+const SIZES: Record<PlaceShape, string> = {
+  square: '(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw',
+  wide: '(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw',
+  portrait: '(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw',
 };
 
 /** "Cities of Uzbekistan" and "Central Asian countries": photo cards linking to the lead form. */
@@ -46,14 +50,9 @@ export class Destinations {
     const images: Record<string, string> = SITE_CONFIG.images[kind];
     const ids: readonly DestinationId[] = kind === 'cities' ? CITY_IDS : COUNTRY_IDS;
     return ids.map((id, index) => {
-      const featured = kind === 'cities' && index === 0;
-      return {
-        id,
-        place: this.content().items[id],
-        image: images[id],
-        featured,
-        sizes: featured ? SIZES.featured : SIZES.regular,
-      };
+      const shape: PlaceShape =
+        kind === 'countries' ? 'portrait' : index < SQUARE_CITIES ? 'square' : 'wide';
+      return { id, place: this.content().items[id], image: images[id], shape, sizes: SIZES[shape] };
     });
   });
 
