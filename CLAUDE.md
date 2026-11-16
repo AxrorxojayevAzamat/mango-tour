@@ -12,10 +12,11 @@ agency (Uzbekistan cities + Central Asia). Goal: collect free-consultation leads
 | Rendering | `@angular/ssr` **build-time prerender only** — `outputMode: "static"`. No Node server at runtime. |
 | Routes | `/uz` (default), `/en`, `/ru`. `/` → `/uz` via `public/_redirects` (301) plus a prerendered meta-refresh fallback. Unknown paths → `/uz`. |
 | Clean URLs | `scripts/postbuild.mjs` flattens `uz/index.html` → `uz.html` so Cloudflare Pages serves `/uz` without a trailing slash. |
-| Content | One typed file per language in `src/content/{uz,en,ru}.ts`, each `satisfies SiteContent` (single interface) → a missing field fails the build. Never hardcode user-facing text in templates. |
+| Content | One typed file per language in `src/content/{uz,en,ru}.ts`, each `as const satisfies SiteContent` (`content.model.ts`) → a missing field fails the build. Fixed lists (cities, FAQ, …) are `Record<Id, …>` keyed by the ids in `src/content/ids.ts`, which also define display order. Language-neutral client data (phone, links, stat numbers, image paths) lives only in `src/content/site-config.ts`. `{placeholders}` in text are filled with `fill()` (`core/i18n/fill.ts`). Never hardcode user-facing text in templates. |
+| Content loading | `contentResolver` (`core/content/`) activates the language and lazy-loads only that language's chunk; the result is bound to `HomePage.content` (`withComponentInputBinding`). Sections receive their slice via `input()`. |
 | Styling | SCSS + BEM, no UI libraries (no Material/Bootstrap/Tailwind). |
 | Font | Manrope Variable, self-hosted via `@fontsource-variable/manrope` (latin, latin-ext, cyrillic). |
-| Uzbek apostrophe | Manrope has **no U+02BB (ʻ)**. In Uzbek text write `O‘zbekiston`, `G‘ijduvon` with **U+2018 (‘)**, never U+02BB or a plain `'`. |
+| Uzbek apostrophes | Manrope has **no U+02BB/U+02BC**. In Uzbek text write oʻ/gʻ with **U+2018** (`O‘zbekiston`, `G‘ijduvon`) and the tutuq belgisi with **U+2019** (`san’at`, `qal’a`). Never a plain `'`. Enforced by `content.spec.ts`. |
 | Images | `NgOptimizedImage` + custom loader (`core/images/image-loader.ts`). `ngSrc` is the extension-less base path; files exist as `{base}-{width}.webp` for widths `240 480 720 960 1280 1600 1920`. Hero image gets `priority`. Placeholders only — the client supplies real photos (see `docs/IMAGES.md`). |
 | Forms → leads | Cloudflare Pages Function `functions/api/lead.ts` → Telegram bot. `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `TURNSTILE_SECRET_KEY` are **server-only env vars**; never import or reference them from `src/`. Spam: honeypot + Cloudflare Turnstile. Rate-limit: Cloudflare KV. |
 | Deploy | Cloudflare Pages: build `npm run build`, output `dist/mango-tour/browser`, functions in `functions/`. |
@@ -44,11 +45,13 @@ functions/api/         Cloudflare Pages Functions (lead.ts + lib/)
 public/                static files copied as-is (_redirects, _headers, icons, brand/, images/)
 scripts/               node build helpers (brand, postbuild, images, seo)
 src/
-  content/             content.model.ts (SiteContent) + uz.ts / en.ts / ru.ts
+  content/             content.model.ts (SiteContent), ids.ts, site-config.ts (client data),
+                       uz.ts / en.ts / ru.ts, content.spec.ts
   styles/              _tokens, _reset, _typography (global) + _breakpoints (mixins only)
   assets/brand/        vector sources
   app/
-    core/              i18n (languages, guard, LanguageService), images (loader), seo, …
+    core/              i18n (languages, guard, LanguageService, fill), content (resolver),
+                       images (loader), seo, …
     pages/home/        HomePage — composes all sections for one language
     sections/          one component per landing block (header, hero, why-us, services, …)
     shared/            reusable UI (icon, button, lightbox, reveal directive, …)

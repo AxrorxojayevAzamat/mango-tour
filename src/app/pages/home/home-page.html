@@ -1,28 +1,42 @@
+@let c = content();
 <main class="home-page">
   <img
     class="home-page__logo"
     ngSrc="brand/logo"
     width="228"
     height="44"
-    alt="mango_tour"
+    [alt]="config.brandName"
     priority
   />
-  <h1 class="home-page__title">Mango Tour</h1>
-  <p class="home-page__text">
-    Stage 1 skeleton — <span class="home-page__accent">{{ langMeta[lang()].label }}</span>
-  </p>
-  <nav class="home-page__langs" aria-label="Language">
+
+  <nav class="home-page__langs" [attr.aria-label]="c.nav.languageSwitcher">
     @for (code of langs; track code) {
       <a
         class="home-page__lang"
         [class.home-page__lang--active]="code === lang()"
         [routerLink]="['/', code]"
         [attr.hreflang]="langMeta[code].htmlLang"
+        [attr.lang]="langMeta[code].htmlLang"
         [attr.aria-current]="code === lang() ? 'page' : null"
       >
         {{ code.toUpperCase() }}
       </a>
     }
   </nav>
-  <p class="home-page__sample" lang="uz">O‘zbekiston, G‘ijduvon — Ўзбекистон, Самарқанд</p>
+
+  <p class="home-page__eyebrow">{{ c.hero.eyebrow }}</p>
+  <h1 class="home-page__title">{{ c.hero.title }}</h1>
+  <p class="home-page__lead">{{ c.hero.lead }}</p>
+
+  <ul class="home-page__menu" role="list">
+    @for (id of navIds; track id) {
+      <li class="home-page__menu-item">{{ c.nav.items[id] }}</li>
+    }
+  </ul>
+
+  <ol class="home-page__sections">
+    @for (title of sectionTitles(); track $index) {
+      <li class="home-page__section">{{ title }}</li>
+    }
+  </ol>
 </main>
