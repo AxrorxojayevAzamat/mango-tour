@@ -23,8 +23,10 @@
 }
 
 .destinations__grid {
+  --place-card-grid-gap: var(--space-5);
+
   display: grid;
-  gap: var(--space-5);
+  gap: var(--place-card-grid-gap);
 
   @include bp.up(md) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
