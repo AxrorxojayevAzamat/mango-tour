@@ -1,0 +1,5 @@
+// Global styles: design tokens, reset and base typography ONLY.
+// Every component owns its BEM block in its own .scss file.
+@use 'tokens';
+@use 'reset';
+@use 'typography';

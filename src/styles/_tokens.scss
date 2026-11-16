@@ -1,0 +1,106 @@
+// Design tokens. The only place raw colour / size values live.
+// Brand colours sampled from docs/brand/logo-source.jpg (see scripts/brand.mjs).
+// Contrast ratios are WCAG 2.x against --color-bg (#0B0B0B).
+
+:root {
+  color-scheme: dark;
+
+  // Surfaces
+  --color-bg: #0b0b0b;
+  --color-surface: #161616;
+  --color-surface-raised: #1f1f1f;
+  --color-border: rgb(246 233 209 / 12%);
+  --color-border-strong: rgb(246 233 209 / 24%);
+  --color-overlay: rgb(11 11 11 / 88%);
+
+  // Brand
+  --color-accent: #ea8430; // mango, 7.35:1 — OK for text of any size
+  --color-accent-hover: #f29a4a; // 8.90:1
+  --color-accent-soft: rgb(234 132 48 / 14%);
+  --color-on-accent: #0b0b0b; // text on mango buttons, 7.35:1 (cream would be 2.23:1 — never use)
+  --color-leaf: #7a853e; // decorative only: 4.12:1 on raised surface
+  --color-leaf-text: #9aa85a; // leaf-green text, ≥ 6.38:1 on every surface
+
+  // Text
+  --color-text: #f6e9d1; // 16.40:1
+  --color-text-muted: #bfb5a3; // 9.70:1
+  --color-text-subtle: #a89f8f; // 7.52:1
+
+  // Feedback
+  --color-success: #8fbf6a;
+  --color-error: #ff8a7a;
+
+  // Typography
+  --font-family-base:
+    'Manrope Variable', 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  // Fluid type scale: 360px → 1440px viewport
+  --font-size-xs: 0.8125rem; // 13
+  --font-size-sm: 0.9375rem; // 15
+  --font-size-md: 1rem; // 16
+  --font-size-lg: clamp(1.0625rem, 1.01rem + 0.25vw, 1.25rem); // 17 → 20
+  --font-size-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.625rem); // 20 → 26
+  --font-size-2xl: clamp(1.625rem, 1.4rem + 1.1vw, 2.5rem); // 26 → 40
+  --font-size-3xl: clamp(2.125rem, 1.6rem + 2.4vw, 4rem); // 34 → 64
+
+  --line-height-tight: 1.15;
+  --line-height-snug: 1.3;
+  --line-height-base: 1.6;
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-wide: 0.08em;
+
+  // Spacing (4px base)
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-section: clamp(4rem, 3rem + 5vw, 8rem);
+
+  // Layout
+  --container-max: 75rem; // 1200
+  --container-gutter: clamp(1rem, 0.6rem + 2vw, 2.5rem);
+  --header-height: 4rem;
+
+  // Shape
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --radius-pill: 999px;
+
+  // Elevation
+  --shadow-card: 0 1px 0 rgb(246 233 209 / 4%) inset, 0 12px 32px rgb(0 0 0 / 40%);
+  --shadow-glow: 0 8px 28px rgb(234 132 48 / 28%);
+
+  // Focus
+  --focus-ring: 0 0 0 3px var(--color-bg), 0 0 0 5px var(--color-accent);
+
+  // Motion (zeroed for prefers-reduced-motion below)
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 600ms;
+
+  // Stacking
+  --z-header: 100;
+  --z-floating: 200;
+  --z-modal: 300;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+  }
+}

@@ -1,0 +1,28 @@
+<main class="home-page">
+  <img
+    class="home-page__logo"
+    ngSrc="brand/logo"
+    width="228"
+    height="44"
+    alt="mango_tour"
+    priority
+  />
+  <h1 class="home-page__title">Mango Tour</h1>
+  <p class="home-page__text">
+    Stage 1 skeleton — <span class="home-page__accent">{{ langMeta[lang()].label }}</span>
+  </p>
+  <nav class="home-page__langs" aria-label="Language">
+    @for (code of langs; track code) {
+      <a
+        class="home-page__lang"
+        [class.home-page__lang--active]="code === lang()"
+        [routerLink]="['/', code]"
+        [attr.hreflang]="langMeta[code].htmlLang"
+        [attr.aria-current]="code === lang() ? 'page' : null"
+      >
+        {{ code.toUpperCase() }}
+      </a>
+    }
+  </nav>
+  <p class="home-page__sample" lang="uz">O‘zbekiston, G‘ijduvon — Ўзбекистон, Самарқанд</p>
+</main>

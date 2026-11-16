@@ -1,0 +1,68 @@
+@use 'breakpoints' as bp;
+
+:host {
+  display: block;
+}
+
+.home-page {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: var(--space-6);
+  min-height: 100dvh;
+  padding: var(--space-8) var(--container-gutter);
+  text-align: center;
+}
+
+.home-page__logo {
+  height: auto;
+}
+
+.home-page__title {
+  color: var(--color-text);
+}
+
+.home-page__text {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-lg);
+}
+
+.home-page__accent {
+  color: var(--color-accent);
+  font-weight: var(--font-weight-semibold);
+}
+
+.home-page__langs {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.home-page__lang {
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+}
+
+.home-page__lang--active {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.home-page__sample {
+  color: var(--color-leaf-text);
+
+  @include bp.up(md) {
+    font-size: var(--font-size-lg);
+  }
+}
