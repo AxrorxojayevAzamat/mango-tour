@@ -125,4 +125,5 @@ npm run dev:functions     # http://localhost:8788/uz
 
 - [`CLAUDE.md`](CLAUDE.md) — arxitektura qarorlari, papka tuzilmasi, kod uslubi (ingliz tilida)
 - [`docs/IMAGES.md`](docs/IMAGES.md) — mijoz beradigan rasmlar ro‘yxati va almashtirish tartibi
+- [`docs/AUDIT.md`](docs/AUDIT.md) — SEO, accessibility va Lighthouse natijalari
 - `docs/DEPLOY.md` — Cloudflare Pages, env o‘zgaruvchilar, custom domen *(7-bosqich)*
