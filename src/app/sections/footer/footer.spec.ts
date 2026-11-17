@@ -46,7 +46,12 @@ describe('Footer', () => {
 
   it('shows company details and the public offer placeholder', () => {
     const el = render();
-    expect(el.querySelectorAll('.footer__detail')).toHaveLength(en.footer.companyDetails.length);
+    const details = [...el.querySelectorAll('.footer__detail')].map((li) => li.textContent);
+    expect(details).toEqual(['“MANGOTOUR TRAVEL” LLC', 'TIN: 313 479 851']);
     expect(el.textContent).toContain(en.footer.offerLink);
+  });
+
+  it('hides the licence line while its number is a placeholder', () => {
+    expect(render().textContent).not.toContain('XXXX');
   });
 });

@@ -30,7 +30,7 @@ agency (Uzbekistan cities + Central Asia). Goal: collect free-consultation leads
 | Deploy | Cloudflare Pages: build `npm run build`, output `dist/mango-tour/browser`, functions in `functions/`. |
 | SEO | `SeoService` (applied in `contentResolver`, so prerendered heads are complete): title, description, canonical, hreflang uz/en/ru + x-default, OG, Twitter, JSON-LD `@graph` (WebSite, TravelAgency, FAQPage) from `core/seo/structured-data.ts`. Placeholder contact data is never emitted (`isPlaceholder`). `postbuild` writes `sitemap.xml` + `robots.txt`; `public/404.html` (noindex) is the real 404; `public/_headers` sets security + cache headers. |
 | Site URL | Single source: `PUBLIC_ENV.siteUrl` from the `SITE_URL` build env (default `https://mango-tour.pages.dev` until the custom domain is connected). Used for canonical, hreflang, OG URLs, JSON-LD, sitemap and robots. |
-| Client data | Phone, address, email, Instagram, stats, etc. are **visible placeholders** like `+998 (XX) XXX-XX-XX`. Never invent real-looking data. |
+| Client data | Phone, address, email, Instagram, stats, etc. are **visible placeholders** like `+998 (XX) XXX-XX-XX`. Never invent real-looking data. Exception: hero stats and footer company-detail lines (licence `№ XXXX`) are **hidden** while `isPlaceholder()` (`src/content/placeholder.ts`) is true and appear automatically once real values are filled in. |
 
 ## Brand
 

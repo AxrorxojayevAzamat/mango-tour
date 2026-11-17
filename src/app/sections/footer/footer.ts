@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import type { FooterContent, NavContent } from '../../../content/content.model';
 import { NAV_IDS } from '../../../content/ids';
 import { IMAGE_CREDITS } from '../../../content/image-credits';
+import { isPlaceholder } from '../../../content/placeholder';
 import { SITE_CONFIG } from '../../../content/site-config';
 import { fill } from '../../core/i18n/fill';
 import { Lang } from '../../core/i18n/languages';
@@ -48,6 +49,11 @@ export class Footer {
 
   protected readonly copyright = computed(() =>
     fill(this.content().copyright, { year: this.year() }),
+  );
+
+  /** Lines still holding a placeholder (licence `№ XXXX`) stay hidden until real data arrives. */
+  protected readonly companyDetails = computed(() =>
+    this.content().companyDetails.filter((line) => !isPlaceholder(line)),
   );
 
   protected readonly socials = computed<SocialLink[]>(() => [
