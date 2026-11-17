@@ -1,23 +1,11 @@
 // schema.org JSON-LD for the landing page. Pure functions (unit-tested), no Angular.
 import type { SiteContent } from '../../../content/content.model';
 import { FAQ_IDS } from '../../../content/ids';
+import { isPlaceholder } from '../../../content/placeholder';
 import { SITE_CONFIG } from '../../../content/site-config';
 import { LANG_META, type Lang } from '../i18n/languages';
 
 export const pageUrl = (siteUrl: string, lang: Lang): string => `${siteUrl}/${lang}`;
-
-/** Placeholder values (`+998 (XX)…`, bare social roots) must never reach search engines. */
-export function isPlaceholder(value: string): boolean {
-  if (/X{2,}/.test(value) || value.includes('example.com')) return true;
-  if (/^https?:\/\//.test(value)) {
-    try {
-      return new URL(value).pathname.replace(/\/+$/, '') === '';
-    } catch {
-      return true;
-    }
-  }
-  return false;
-}
 
 const real = <T extends string>(value: T): T | undefined =>
   isPlaceholder(value) ? undefined : value;

@@ -28,13 +28,15 @@
       <app-icon name="arrow-right" />
     </a>
 
-    <dl class="hero__stats">
-      @for (id of statIds; track id) {
-        <div class="hero__stat">
-          <dt class="hero__stat-label">{{ c.stats[id] }}</dt>
-          <dd class="hero__stat-value">{{ stats[id] }}</dd>
-        </div>
-      }
-    </dl>
+    @if (statIds.length) {
+      <dl class="hero__stats">
+        @for (id of statIds; track id) {
+          <div class="hero__stat">
+            <dt class="hero__stat-label">{{ c.stats[id] }}</dt>
+            <dd class="hero__stat-value">{{ stats[id] }}</dd>
+          </div>
+        }
+      </dl>
+    }
   </div>
 </section>

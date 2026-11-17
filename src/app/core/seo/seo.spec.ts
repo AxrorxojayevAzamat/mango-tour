@@ -4,7 +4,8 @@ import { en } from '../../../content/en';
 import { ru } from '../../../content/ru';
 import { uz } from '../../../content/uz';
 import { SeoService } from './seo.service';
-import { buildStructuredData, isPlaceholder, serializeJsonLd } from './structured-data';
+import { isPlaceholder } from '../../../content/placeholder';
+import { buildStructuredData, serializeJsonLd } from './structured-data';
 
 const SITE = 'https://mango-tour.pages.dev';
 

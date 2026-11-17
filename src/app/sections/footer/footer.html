@@ -73,7 +73,7 @@
 
       <h2 class="footer__title footer__title--spaced">{{ c.companyTitle }}</h2>
       <ul class="footer__list" role="list">
-        @for (line of c.companyDetails; track $index) {
+        @for (line of companyDetails(); track $index) {
           <li class="footer__detail">{{ line }}</li>
         }
       </ul>
